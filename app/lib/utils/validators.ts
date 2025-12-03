@@ -1,3 +1,3 @@
 export function validateJobDescription(text: string) {
-  return text && text.length > 10;
+  return text.trim().length > 10;
 }
