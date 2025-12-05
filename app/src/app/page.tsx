@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
-import { analyzeJobDescription } from "@/lib/actions/analyse";
+import { analyseJobDescription } from "@/lib/actions/analyse";
+import { AnalysedJD } from "@/lib/services/ai";
+import { ResultCard } from "../components/result-card";
 
 export default function Home() {
   const [jobDescription, setJobDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<AnalysedJD | null>(null);
   const [error, setError] = useState<string | null>(null);
   const characterCount = jobDescription.length;
   const isValid = characterCount > 0;
@@ -17,12 +19,12 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await analyzeJobDescription(formData);
+      const response = await analyseJobDescription(formData);
 
       if (response.success) {
         setResult(response.data);
       } else {
-        setError(response.error || "Failed to analyze");
+        setError(response.error || "Failed to analyse");
       }
     } catch (err) {
       setError("An unexpected error occurred");
@@ -38,7 +40,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="cursor-pointer">
               <h1 className="text-blue-600 text-3xl font-smibold">
-                AI-Powered Job Description Analyzer
+                AI-Powered Job Description analyser
               </h1>
               <p className="text-gray-600 mt-1">
                 Extract insights and improve your application materials
@@ -83,7 +85,7 @@ export default function Home() {
                 </span>
                 {isValid && (
                   <span className="text-green-600 text-sm">
-                    ✓ Ready to analyze
+                    ✓ Ready to analyse
                   </span>
                 )}
               </div>
@@ -93,26 +95,44 @@ export default function Home() {
                 disabled={!isValid || isAnalyzing}
                 className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
               >
-                {isAnalyzing ? "Analyzing..." : "Analyze"}
+                {isAnalyzing ? "Analyzing..." : "analyse"}
               </button>
             </div>
 
             {error && (
               <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-                {error}
+                Failed to analyse job description
               </div>
             )}
           </div>
         </form>
 
         {result && (
-          <div className="bg-white rounded-xl shadow-md p-6 sm:p-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Analysis Results
-            </h2>
-            <pre className="bg-gray-50 p-4 rounded-lg overflow-auto">
-              {JSON.stringify(result, null, 2)}
-            </pre>
+          <div className="animate-fadeIn">
+            <h2 className="text-gray-800 mb-6">Analysis Results</h2>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <ResultCard
+                title="Hard Skills"
+                type="skills"
+                content={result.hardSkills}
+              />
+              <ResultCard
+                title="Soft Skills"
+                type="skills"
+                content={result.softSkills}
+              />
+              <ResultCard
+                title="Resume Improvement Suggestions"
+                type="tips"
+                content={result.resumeImprovements}
+              />
+              <ResultCard
+                title="Cover Letter Snippet"
+                type="text"
+                content={result.coverLetterSnippet}
+              />
+            </div>
           </div>
         )}
       </main>

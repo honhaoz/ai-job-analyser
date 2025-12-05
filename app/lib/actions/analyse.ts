@@ -17,6 +17,7 @@ export async function analyzeJobDescription(formData: FormData) {
       return {
         success: false,
         error: "Invalid job description",
+        data: null,
       };
     }
 
@@ -31,6 +32,7 @@ export async function analyzeJobDescription(formData: FormData) {
     return {
       success: false,
       error: "Failed to analyze job description",
+      data: null,
     };
   }
 }
