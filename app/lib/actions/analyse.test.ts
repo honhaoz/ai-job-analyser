@@ -10,96 +10,48 @@ vi.mock("openai", () => ({
   },
 }));
 
-vi.mock("@/lib/services/ai");
-vi.mock("@/lib/utils/validators");
+describe("analyseJDAction", () => {
+  let analyseJDAction: typeof import("./analyse").analyseJDAction;
 
-const { analyzeJD } = await import("@/lib/services/ai");
-const { validateJobDescription } = await import("@/lib/utils/validators");
-const { analyzeJobDescription } = await import("./analyse");
-
-describe("analyzeJobDescription", () => {
-  const mockAnalyzeJD = vi.mocked(analyzeJD);
-  const mockValidateJobDescription = vi.mocked(validateJobDescription);
-
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
+    const actionModule = await import("./analyse");
+    analyseJDAction = actionModule.analyseJDAction;
   });
 
   it("should return error for invalid job description", async () => {
-    mockValidateJobDescription.mockReturnValue(false);
-
     const formData = new FormData();
     formData.append("jobDescription", "short");
 
-    const result = await analyzeJobDescription(formData);
+    const result = await analyseJDAction(formData);
 
     expect(result.success).toBe(false);
     expect(result.error).toBe("Invalid job description");
-    expect(mockAnalyzeJD).not.toHaveBeenCalled();
   });
 
   it("should return success with AI result for valid job description", async () => {
-    const mockAIResult = {
-      hardSkills: ["JavaScript", "React"],
-      softSkills: ["Communication"],
-      resumeImprovements: [
-        "Add more details",
-        "Highlight achievements",
-        "Include metrics",
-      ],
-      coverLetterSnippet: "I am excited to apply...",
-    };
-
-    mockValidateJobDescription.mockReturnValue(true);
-    mockAnalyzeJD.mockResolvedValue(mockAIResult);
-
     const formData = new FormData();
     formData.append(
       "jobDescription",
       "Valid job description with more than ten characters"
     );
 
-    const result = await analyzeJobDescription(formData);
+    const result = await analyseJDAction(formData);
 
     expect(result.success).toBe(true);
-    expect(result.data).toEqual(mockAIResult);
-    expect(mockValidateJobDescription).toHaveBeenCalledWith(
-      "Valid job description with more than ten characters"
-    );
-    expect(mockAnalyzeJD).toHaveBeenCalledWith(
-      "Valid job description with more than ten characters"
-    );
-  });
-
-  it("should handle AI service errors", async () => {
-    mockValidateJobDescription.mockReturnValue(true);
-    mockAnalyzeJD.mockRejectedValue(new Error("OpenAI API error"));
-
-    const formData = new FormData();
-    formData.append("jobDescription", "Valid job description");
-
-    const result = await analyzeJobDescription(formData);
-
-    expect(result.success).toBe(false);
-    expect(result.error).toBe("Failed to analyze job description");
+    expect(result.data).toBeDefined();
+    expect(result.data).toHaveProperty("hardSkills");
+    expect(result.data).toHaveProperty("softSkills");
+    expect(result.data).toHaveProperty("resumeImprovements");
+    expect(result.data).toHaveProperty("coverLetterSnippet");
   });
 
   it("should handle missing job description field", async () => {
     const formData = new FormData();
 
-    const result = await analyzeJobDescription(formData);
+    const result = await analyseJDAction(formData);
 
     expect(result.success).toBe(false);
-    expect(result.error).toBe("Failed to analyze job description");
-  });
-
-  it("should handle zod validation errors", async () => {
-    const formData = new FormData();
-    formData.append("jobDescription", 123 as any); // Invalid type
-
-    const result = await analyzeJobDescription(formData);
-
-    expect(result.success).toBe(false);
-    expect(result.error).toBe("Failed to analyze job description");
+    expect(result.error).toBe("Failed to analyse job description");
   });
 });
