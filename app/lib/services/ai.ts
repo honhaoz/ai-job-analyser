@@ -8,7 +8,7 @@ export type AnalysedJD = {
   coverLetterSnippet: string;
 };
 
-const mockResponse: AnalysedJD = {
+export const mockResponse: AnalysedJD = {
   hardSkills: [
     "Microsoft Azure",
     "Google Cloud Platform",
@@ -52,14 +52,14 @@ const mockResponse: AnalysedJD = {
     "I am excited about the opportunity to join Lloyds Banking Group as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at Lloyds.",
 };
 
-export async function analyzeJD(jobDescription: string): Promise<AnalysedJD> {
+export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const dev = process.env.NODE_ENV !== "production";
   if (dev) {
     console.log("Development mode: returning mock AI response.");
     return mockResponse;
   }
   const systemPrompt = `
-You are an AI that analyzes job descriptions ONLY.
+You are an AI that analyses job descriptions ONLY.
 You must NOT output any personal data or sensitive information.
 If the input contains names, emails, phone numbers, addresses, companies, or any identifiable information, REMOVE or generalize it.
 Never reproduce the raw text of the input.

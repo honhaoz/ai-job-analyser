@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { analyseJobDescription } from "@/lib/actions/analyse";
+import { analyseJDAction } from "@/lib/actions/analyse";
 import { AnalysedJD } from "@/lib/services/ai";
 import { ResultCard } from "../components/result-card";
 
@@ -19,7 +19,7 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await analyseJobDescription(formData);
+      const response = await analyseJDAction(formData);
 
       if (response.success) {
         setResult(response.data);

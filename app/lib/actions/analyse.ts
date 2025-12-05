@@ -1,13 +1,13 @@
 "use server";
 import { z } from "zod";
-import { analyzeJD } from "@/lib/services/ai";
+import { analyseJD } from "@/lib/services/ai";
 import { validateJobDescription } from "@/lib/utils/validators";
 
 const JDFormSchema = z.object({
   jobDescription: z.string(),
 });
 
-export async function analyzeJobDescription(formData: FormData) {
+export async function analyseJDAction(formData: FormData) {
   try {
     const { jobDescription } = JDFormSchema.parse({
       jobDescription: formData.get("jobDescription"),
@@ -21,7 +21,7 @@ export async function analyzeJobDescription(formData: FormData) {
       };
     }
 
-    const aiResult = await analyzeJD(jobDescription);
+    const aiResult = await analyseJD(jobDescription);
 
     return {
       success: true,
@@ -31,7 +31,7 @@ export async function analyzeJobDescription(formData: FormData) {
     console.error("Server action error:", err);
     return {
       success: false,
-      error: "Failed to analyze job description",
+      error: "Failed to analyse job description",
       data: null,
     };
   }
