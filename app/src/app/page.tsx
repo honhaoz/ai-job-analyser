@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { analyseJDAction } from "@/lib/actions/analyse";
 import { AnalysedJD } from "@/lib/services/ai";
-import { ResultCard } from "../components/result-card";
+import { ResultCard, ResultCardProps } from "../components/result-card";
 
 export default function Home() {
   const [jobDescription, setJobDescription] = useState("");
@@ -35,6 +35,32 @@ export default function Home() {
     }
   };
 
+  const ResultCardsContent: ResultCardProps[] = useMemo(
+    () => [
+      {
+        title: "Hard Skills",
+        type: "skills",
+        content: result && result.hardSkills,
+      },
+      {
+        title: "Soft Skills",
+        type: "skills",
+        content: result && result.softSkills,
+      },
+      {
+        title: "Resume Improvement Suggestions",
+        type: "tips",
+        content: result && result.resumeImprovements,
+      },
+      {
+        title: "Cover Letter Snippet",
+        type: "text",
+        content: result && result.coverLetterSnippet,
+      },
+    ],
+    [result]
+  );
+
   return (
     <div className="min-h-screen bg-linear-to-br from-red-400 to-gray-100">
       <Header />
@@ -52,26 +78,14 @@ export default function Home() {
             <h2 className="text-gray-800 mb-6">Analysis Results</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ResultCard
-                title="Hard Skills"
-                type="skills"
-                content={result.hardSkills}
-              />
-              <ResultCard
-                title="Soft Skills"
-                type="skills"
-                content={result.softSkills}
-              />
-              <ResultCard
-                title="Resume Improvement Suggestions"
-                type="tips"
-                content={result.resumeImprovements}
-              />
-              <ResultCard
-                title="Cover Letter Snippet"
-                type="text"
-                content={result.coverLetterSnippet}
-              />
+              {ResultCardsContent.map((card) => (
+                <ResultCard
+                  key={card.title}
+                  title={card.title}
+                  type={card.type}
+                  content={card.content}
+                />
+              ))}
             </div>
           </div>
         )}

@@ -1,14 +1,17 @@
 import { Copy, Check } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
-interface ResultCardProps {
+export interface ResultCardProps {
   title: string;
   type: "skills" | "tips" | "text";
-  content: string[] | string;
+  content: string[] | string | null;
 }
 
 export function ResultCard({ title, type, content }: ResultCardProps) {
   const [copied, setCopied] = useState(false);
+  if (content === null) {
+    return null;
+  }
   return (
     <div className="rounded-xl shadow-md p-6 transition-all hover:shadow-xl hover:-translate-y-1 duration-300 flex flex-col">
       <div className="flex justify-between items-start mb-4">
