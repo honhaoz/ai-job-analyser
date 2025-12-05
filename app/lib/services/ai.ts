@@ -55,6 +55,8 @@ export const mockResponse: AnalysedJD = {
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const dev = process.env.NODE_ENV !== "production";
   if (dev) {
+    // Simulate loading delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log("Development mode: returning mock AI response.");
     return mockResponse;
   }
