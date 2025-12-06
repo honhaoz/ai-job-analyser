@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { analyseJDAction } from "@/lib/actions/analyse";
 import { AnalysedJD } from "@/lib/services/ai";
 import { ResultCard, ResultCardProps } from "../components/result-card";
@@ -29,7 +29,7 @@ export default function Home() {
         setError(response.error || "Failed to analyse");
       }
     } catch (err) {
-      setError("An unexpected error occurred");
+      setError("An unexpected error occurred submitting the form.");
     } finally {
       setIsAnalysing(false);
     }
@@ -40,22 +40,22 @@ export default function Home() {
       {
         title: "Hard Skills",
         type: "skills",
-        content: result && result.hardSkills,
+        content: result?.hardSkills ?? null,
       },
       {
         title: "Soft Skills",
         type: "skills",
-        content: result && result.softSkills,
+        content: result?.softSkills ?? null,
       },
       {
         title: "Resume Improvement Suggestions",
         type: "tips",
-        content: result && result.resumeImprovements,
+        content: result?.resumeImprovements ?? null,
       },
       {
         title: "Cover Letter Snippet",
         type: "text",
-        content: result && result.coverLetterSnippet,
+        content: result?.coverLetterSnippet ?? null,
       },
     ],
     [result]
@@ -67,6 +67,7 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <InputJDForm
           jobDescription={jobDescription}
+          characterCount={characterCount}
           setJobDescription={setJobDescription}
           isAnalysing={isAnalysing}
           handleSubmit={handleSubmit}
@@ -100,7 +101,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="cursor-pointer">
-            <h1 className="text-blue-600 text-3xl font-smibold">
+            <h1 className="text-blue-700 text-3xl font-semibold">
               AI-Powered Job Description analyser
             </h1>
             <p className="text-gray-600 mt-1">
@@ -120,6 +121,7 @@ const Header = () => {
 
 const InputJDForm = ({
   jobDescription,
+  characterCount,
   setJobDescription,
   isAnalysing,
   handleSubmit,
@@ -127,13 +129,13 @@ const InputJDForm = ({
   error,
 }: {
   jobDescription: string;
-  setJobDescription: (value: string) => void;
+  characterCount: number;
+  setJobDescription: Dispatch<SetStateAction<string>>;
   isAnalysing: boolean;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   isValid: boolean;
   error: string | null;
 }) => {
-  const characterCount = jobDescription.length;
   return (
     <form onSubmit={handleSubmit}>
       <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 mb-8 sm:mb-12 transition-all hover:shadow-lg">
@@ -168,7 +170,7 @@ const InputJDForm = ({
             disabled={!isValid || isAnalysing}
             className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
           >
-            {isAnalysing ? "Analysing..." : "analyse"}
+            {isAnalysing ? "Analysing..." : "Analyse"}
           </button>
         </div>
 

@@ -49,7 +49,7 @@ export const mockResponse: AnalysedJD = {
     "Showcase personal development pursuits and learning initiatives",
   ],
   coverLetterSnippet:
-    "I am excited about the opportunity to join Lloyds Banking Group as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at Lloyds.",
+    "I am excited about the opportunity to join {{Company}} as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at Lloyds.",
 };
 
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {

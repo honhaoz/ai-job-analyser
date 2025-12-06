@@ -52,6 +52,8 @@ describe("analyseJDAction", () => {
     const result = await analyseJDAction(formData);
 
     expect(result.success).toBe(false);
-    expect(result.error).toBe("Failed to analyse job description");
+    expect(result.error).toBe(
+      "Failed Zod validation to analyse job description"
+    );
   });
 });

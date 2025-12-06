@@ -1,5 +1,5 @@
 import { Copy, Check } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export interface ResultCardProps {
   title: string;
@@ -9,6 +9,7 @@ export interface ResultCardProps {
 
 export function ResultCard({ title, type, content }: ResultCardProps) {
   const [copied, setCopied] = useState(false);
+
   if (content === null) {
     return null;
   }
@@ -25,7 +26,7 @@ export function ResultCard({ title, type, content }: ResultCardProps) {
             {content.map((skill, index) => (
               <span
                 key={index}
-                className="px-3 py-1.5 text-blue-700 rounded-full text-sm border  hover:bg-blue-100 transition-colors"
+                className="px-3 py-1.5 text-blue-700 rounded-full text-sm border hover:bg-blue-100 transition-colors"
               >
                 {skill}
               </span>
@@ -67,6 +68,13 @@ export const CopyButton = ({
   copied: boolean;
   setCopied: Dispatch<SetStateAction<boolean>>;
 }) => {
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => setCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
+
   const handleCopy = () => {
     let textToCopy = "";
 
@@ -76,20 +84,25 @@ export const CopyButton = ({
       textToCopy = content;
     }
 
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+    } catch (error) {
+      console.error("Failed to copy to clipboard");
+      // TODO: show an error message to the user
+    }
   };
   return (
     <button
       onClick={handleCopy}
       className="p-2 text-gray-400 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
       title="Copy to clipboard"
+      aria-label={copied ? "Copied to clipboard" : "Copy to clipboard"}
     >
       {copied ? (
-        <Check className="w-5 h-5 text-green-600" />
+        <Check className="w-5 h-5 text-green-600" aria-hidden="true" />
       ) : (
-        <Copy className="w-5 h-5" />
+        <Copy className="w-5 h-5" aria-hidden="true" />
       )}
     </button>
   );
