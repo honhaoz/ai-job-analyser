@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
+import { analyseJD } from "./ai";
 
 const mockCreate = vi.fn();
 
@@ -14,16 +15,14 @@ vi.mock("openai", () => {
   };
 });
 
-import { analyzeJD } from "./ai";
-
-describe("analyzeJD", () => {
+describe("analyseJD", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockCreate.mockClear();
   });
 
   it("should return mock data in development mode", async () => {
-    const result = await analyzeJD("Test job description");
+    const result = await analyseJD("Test job description");
 
     expect(result).toHaveProperty("hardSkills");
     expect(result).toHaveProperty("softSkills");
@@ -34,7 +33,7 @@ describe("analyzeJD", () => {
   });
 
   it("should call OpenAI API in production mode", async () => {
-    (process.env as any).NODE_ENV = "production";
+    vi.stubEnv("NODE_ENV", "production");
 
     const mockResponse = {
       choices: [
@@ -57,7 +56,7 @@ describe("analyzeJD", () => {
 
     mockCreate.mockResolvedValue(mockResponse);
 
-    const result = await analyzeJD(
+    const result = await analyseJD(
       "Software Engineer position requiring JavaScript skills"
     );
 
@@ -68,16 +67,18 @@ describe("analyzeJD", () => {
   });
 
   it("should handle OpenAI API errors", async () => {
-    (process.env as any).NODE_ENV = "production";
+    vi.stubEnv("NODE_ENV", "production");
+
     mockCreate.mockRejectedValue(new Error("API quota exceeded"));
 
-    await expect(analyzeJD("Test job description")).rejects.toThrow(
+    await expect(analyseJD("Test job description")).rejects.toThrow(
       "API quota exceeded"
     );
   });
 
   it("should handle invalid JSON response", async () => {
-    (process.env as any).NODE_ENV = "production";
+    vi.stubEnv("NODE_ENV", "production");
+
     const mockResponse = {
       choices: [
         {
@@ -90,11 +91,12 @@ describe("analyzeJD", () => {
 
     mockCreate.mockResolvedValue(mockResponse);
 
-    await expect(analyzeJD("Test job description")).rejects.toThrow();
+    await expect(analyseJD("Test job description")).rejects.toThrow();
   });
 
   it("should handle empty response", async () => {
-    (process.env as any).NODE_ENV = "production";
+    vi.stubEnv("NODE_ENV", "production");
+
     const mockResponse = {
       choices: [
         {
@@ -107,7 +109,7 @@ describe("analyzeJD", () => {
 
     mockCreate.mockResolvedValue(mockResponse);
 
-    const result = await analyzeJD("Test job description");
+    const result = await analyseJD("Test job description");
 
     expect(result).toEqual({});
   });
