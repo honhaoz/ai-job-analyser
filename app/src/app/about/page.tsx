@@ -76,9 +76,9 @@ const Features = () => {
     <div className="mb-12">
       <h2 className="text-gray-800 mb-6 text-center">Why Choose Us?</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {features.map((feature, index) => (
+        {features.map((feature) => (
           <div
-            key={index}
+            key={feature.title}
             className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl duration-300 hover:-translate-y-1"
           >
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 mb-4">
