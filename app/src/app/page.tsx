@@ -62,62 +62,35 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-red-400 to-gray-100">
-      <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <InputJDForm
-          jobDescription={jobDescription}
-          characterCount={characterCount}
-          setJobDescription={setJobDescription}
-          isAnalysing={isAnalysing}
-          handleSubmit={handleSubmit}
-          isValid={isValid}
-          error={error}
-        />
-        {result && (
-          <div className="animate-fadeIn">
-            <h2 className="text-gray-800 mb-6">Analysis Results</h2>
+    <>
+      <InputJDForm
+        jobDescription={jobDescription}
+        characterCount={characterCount}
+        setJobDescription={setJobDescription}
+        isAnalysing={isAnalysing}
+        handleSubmit={handleSubmit}
+        isValid={isValid}
+        error={error}
+      />
+      {result && (
+        <div className="animate-fadeIn">
+          <h2 className="text-gray-800 mb-6">Analysis Results</h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {ResultCardsContent.map((card) => (
-                <ResultCard
-                  key={card.title}
-                  title={card.title}
-                  type={card.type}
-                  content={card.content}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {ResultCardsContent.map((card) => (
+              <ResultCard
+                key={card.title}
+                title={card.title}
+                type={card.type}
+                content={card.content}
+              />
+            ))}
           </div>
-        )}
-      </main>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
-
-const Header = () => {
-  return (
-    <header className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="cursor-pointer">
-            <h1 className="text-blue-700 text-3xl font-semibold">
-              AI-Powered Job Description analyser
-            </h1>
-            <p className="text-gray-600 mt-1">
-              Extract insights and improve your application materials instantly
-            </p>
-          </div>
-          <nav className="flex gap-6">
-            <button>Home</button>
-            <button>About</button>
-            <button>Contact</button>
-          </nav>
-        </div>
-      </div>
-    </header>
-  );
-};
 
 const InputJDForm = ({
   jobDescription,
