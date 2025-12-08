@@ -1,4 +1,12 @@
-import { Mail, Github, Linkedin, MessageCircle } from "lucide-react";
+"use client";
+import {
+  Mail,
+  Github,
+  Linkedin,
+  MessageCircle,
+  AtSign,
+  Dot,
+} from "lucide-react";
 
 export default function Contact() {
   return (
@@ -23,13 +31,29 @@ const HeroSection = () => {
 };
 
 const ContactInfo = () => {
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const user = "honghao";
+    const domain = "workmail.com";
+    window.location.href = `mailto:${user}@${domain}`;
+  };
+
   const contactLists = [
     {
       method: "Email Us",
       description: "For general inquiries and support",
       icon: <Mail className="w-6 h-6" />,
-      detail: "honghao@workmail.com",
-      href: "mailto:honghao@workmail.com",
+      detail: (
+        <>
+          honghao
+          <AtSign className="w-3 h-3 inline mx-0.5" />
+          workmail
+          <Dot className="w-3 h-3 inline" />
+          com
+        </>
+      ),
+      href: "#",
+      isEmail: true,
     },
     {
       method: "GitHub",
@@ -37,6 +61,7 @@ const ContactInfo = () => {
       icon: <Github className="w-6 h-6" />,
       detail: "github.com/honhaoz",
       href: "https://github.com/honhaoz",
+      isEmail: false,
     },
     {
       method: "LinkedIn",
@@ -44,6 +69,7 @@ const ContactInfo = () => {
       icon: <Linkedin className="w-6 h-6" />,
       detail: "linkedin.com/in/honghaoz",
       href: "https://linkedin.com/in/honghaoz",
+      isEmail: false,
     },
     {
       method: "Feedback",
@@ -52,25 +78,29 @@ const ContactInfo = () => {
       icon: <MessageCircle className="w-6 h-6" />,
       detail: "",
       href: "",
+      isEmail: false,
     },
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
       {contactLists.map((contact) => (
-        <div className="bg-white rounded-xl shadow-md p-6">
+        <div key={contact.method} className="bg-white rounded-xl shadow-md p-6">
           <div className="w-12 h-12 rounded-lg flex items-center justify-center text-blue-700 mb-4">
             {contact.icon}
           </div>
           <h3 className="text-gray-800 mb-2">{contact.method}</h3>
           <p className="text-gray-600 mb-2">{contact.description}</p>
-          <a
-            href={contact.href}
-            className="text-blue-500 hover:text-blue-700 transition-colors"
-            target="_blank"
-          >
-            {contact.detail}
-          </a>
+          {contact.detail && (
+            <a
+              href={contact.href}
+              onClick={contact.isEmail ? handleEmailClick : undefined}
+              className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer"
+              target={contact.isEmail ? undefined : "_blank"}
+            >
+              {contact.detail}
+            </a>
+          )}
         </div>
       ))}
     </div>
@@ -92,7 +122,7 @@ const FaqSection = () => {
     {
       question: "How accurate is the AI?",
       answer:
-        "Our AI is highly accurate and continuously improving, but we always recommend reviewing and customizing the results to match your personal experience and style.",
+        "Our AI is highly accurate and continuously improving, but we always recommend reviewing and customising the results to match your personal experience and style.",
     },
     {
       question: "Can I suggest new features?",
