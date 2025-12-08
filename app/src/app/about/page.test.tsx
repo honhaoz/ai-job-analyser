@@ -58,7 +58,7 @@ describe("About Page", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /Get personalized resume tips and cover letter snippets/i
+        /Get personalised resume tips and cover letter snippets/i
       )
     ).toBeInTheDocument();
     expect(screen.getByText(/No waiting around/i)).toBeInTheDocument();
