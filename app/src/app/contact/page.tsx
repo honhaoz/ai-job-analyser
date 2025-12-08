@@ -31,7 +31,7 @@ const ContactInfo = () => {
     window.location.href = `mailto:${user}@${domain}`;
   };
 
-  const contactLists = [
+  const contactList = [
     {
       method: "Email Us",
       description: "For general inquiries and support",
@@ -67,7 +67,7 @@ const ContactInfo = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-      {contactLists.map((contact) => (
+      {contactList.map((contact) => (
         <div key={contact.method} className="bg-white rounded-xl shadow-md p-6">
           <div className="w-12 h-12 rounded-lg flex items-center justify-center text-blue-700 mb-4">
             {contact.icon}
@@ -92,7 +92,7 @@ const ContactInfo = () => {
 };
 
 const FaqSection = () => {
-  const FaqList = [
+  const faqList = [
     {
       question: "Is the service free?",
       answer:
@@ -119,7 +119,7 @@ const FaqSection = () => {
     <div className="bg-white rounded-xl shadow-md p-8">
       <h2 className="text-gray-800 mb-6">Frequently Asked Questions</h2>
       <div className="space-y-6">
-        {FaqList.map((faq) => (
+        {faqList.map((faq) => (
           <div key={faq.question}>
             <h3 className="text-gray-800 mb-2">{faq.question}</h3>
             <p className="text-gray-600">{faq.answer}</p>

@@ -35,7 +35,7 @@ export default function Home() {
     }
   };
 
-  const ResultCardsContent: ResultCardProps[] = useMemo(
+  const resultCardsContent: ResultCardProps[] = useMemo(
     () => [
       {
         title: "Hard Skills",
@@ -77,7 +77,7 @@ export default function Home() {
           <h2 className="text-gray-800 mb-6">Analysis Results</h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {ResultCardsContent.map((card) => (
+            {resultCardsContent.map((card) => (
               <ResultCard
                 key={card.title}
                 title={card.title}

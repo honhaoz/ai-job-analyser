@@ -17,7 +17,7 @@ const HeroSection = () => {
     <div className="text-center mb-12">
       <h1 className="text-blue-700 mb-4">About Our Platform</h1>
       <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-        AI-Powered Job Description Analyser helps job seekers optimize their
+        AI-Powered Job Description Analyser helps job seekers optimise their
         applications by extracting key insights from job postings and providing
         actionable recommendations.
       </p>
@@ -57,7 +57,7 @@ const Features = () => {
       icon: <Target className="w-6 h-6" />,
       title: "Tailored Suggestions",
       description:
-        "Get personalized resume tips and cover letter snippets that match the specific job requirements.",
+        "Get personalised resume tips and cover letter snippets that match the specific job requirements.",
     },
     {
       icon: <Zap className="w-6 h-6" />,
@@ -94,7 +94,7 @@ const Features = () => {
 };
 
 const HowItWorks = () => {
-  const HowItWorksList = [
+  const howItWorksList = [
     {
       number: 1,
       heading: "Paste Job Description",
@@ -110,7 +110,7 @@ const HowItWorks = () => {
       number: 3,
       heading: "Get Results",
       description:
-        "Receive extracted skills, resume tips, and a customized cover letter snippet.",
+        "Receive extracted skills, resume tips, and a customised cover letter snippet.",
     },
     {
       number: 4,
@@ -123,7 +123,7 @@ const HowItWorks = () => {
     <div className="bg-linear-to-br from-blue-50 to-white rounded-xl shadow-md p-8 mb-8">
       <h2 className="text-gray-800 mb-6">How It Works</h2>
       <div className="space-y-6">
-        {HowItWorksList.map((item) => (
+        {howItWorksList.map((item) => (
           <div className="flex gap-4" key={item.number}>
             <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">
               {item.number}
