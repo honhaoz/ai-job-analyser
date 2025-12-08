@@ -14,7 +14,7 @@ describe("Contact Page", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render all four contact methods", () => {
+  it("should render all three contact methods", () => {
     render(<Contact />);
 
     expect(
@@ -25,9 +25,6 @@ describe("Contact Page", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: /linkedin/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: /feedback/i })
     ).toBeInTheDocument();
   });
 
@@ -43,19 +40,17 @@ describe("Contact Page", () => {
     expect(
       screen.getByText(/Connect with us professionally/i)
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Your feedback helps us improve/i)
-    ).toBeInTheDocument();
   });
 
-  it("should render email link with correct mailto href", () => {
+  it("should render email link with obfuscated display and click handler", () => {
     render(<Contact />);
 
     const emailLink = screen.getByRole("link", {
-      name: /honghao@workmail\.com/i,
+      name: /honghao.*workmail.*com/i,
     });
     expect(emailLink).toBeInTheDocument();
-    expect(emailLink).toHaveAttribute("href", "mailto:honghao@workmail.com");
+    expect(emailLink).toHaveAttribute("href", "#");
+    expect(emailLink).toHaveClass("cursor-pointer");
   });
 
   it("should render GitHub link with correct href", () => {
@@ -83,15 +78,18 @@ describe("Contact Page", () => {
     expect(linkedinLink).toHaveAttribute("target", "_blank");
   });
 
-  it("should render external links with target blank", () => {
+  it("should render external links with target blank but not email", () => {
     render(<Contact />);
 
-    const externalLinks = screen.getAllByRole("link", {
-      name: /github|linkedin/i,
+    const githubLink = screen.getByRole("link", {
+      name: /github\.com\/honhaoz/i,
     });
-    externalLinks.forEach((link) => {
-      expect(link).toHaveAttribute("target", "_blank");
+    const linkedinLink = screen.getByRole("link", {
+      name: /linkedin\.com\/in\/honghaoz/i,
     });
+
+    expect(githubLink).toHaveAttribute("target", "_blank");
+    expect(linkedinLink).toHaveAttribute("target", "_blank");
   });
 
   it("should render FAQ section with heading", () => {
@@ -148,7 +146,6 @@ describe("Contact Page", () => {
     expect(headingTexts).toContain("Email Us");
     expect(headingTexts).toContain("GitHub");
     expect(headingTexts).toContain("LinkedIn");
-    expect(headingTexts).toContain("Feedback");
     expect(headingTexts).toContain("Frequently Asked Questions");
   });
 
@@ -167,7 +164,7 @@ describe("Contact Page", () => {
   it("should render contact cards in a grid", () => {
     render(<Contact />);
 
-    const contactMethods = [/email us/i, /github/i, /linkedin/i, /feedback/i];
+    const contactMethods = [/email us/i, /github/i, /linkedin/i];
     contactMethods.forEach((method) => {
       expect(screen.getByRole("heading", { name: method })).toBeInTheDocument();
     });

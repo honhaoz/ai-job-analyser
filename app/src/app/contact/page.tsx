@@ -1,12 +1,5 @@
 "use client";
-import {
-  Mail,
-  Github,
-  Linkedin,
-  MessageCircle,
-  AtSign,
-  Dot,
-} from "lucide-react";
+import { Mail, Github, Linkedin, AtSign, Dot } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -46,10 +39,9 @@ const ContactInfo = () => {
       detail: (
         <>
           honghao
-          <AtSign className="w-3 h-3 inline mx-0.5" />
+          <AtSign className="w-3 h-3 inline mx-0.5" aria-label="at" />
           workmail
-          <Dot className="w-3 h-3 inline" />
-          com
+          <Dot className="w-3 h-3 inline" aria-label="dot" /> com
         </>
       ),
       href: "#",
@@ -71,19 +63,10 @@ const ContactInfo = () => {
       href: "https://linkedin.com/in/honghaoz",
       isEmail: false,
     },
-    {
-      method: "Feedback",
-      description:
-        "Your feedback helps us improve. Let us know what features you'd like to see!",
-      icon: <MessageCircle className="w-6 h-6" />,
-      detail: "",
-      href: "",
-      isEmail: false,
-    },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
       {contactLists.map((contact) => (
         <div key={contact.method} className="bg-white rounded-xl shadow-md p-6">
           <div className="w-12 h-12 rounded-lg flex items-center justify-center text-blue-700 mb-4">
@@ -97,6 +80,7 @@ const ContactInfo = () => {
               onClick={contact.isEmail ? handleEmailClick : undefined}
               className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer"
               target={contact.isEmail ? undefined : "_blank"}
+              rel={contact.isEmail ? undefined : "noopener noreferrer"}
             >
               {contact.detail}
             </a>
@@ -135,8 +119,8 @@ const FaqSection = () => {
     <div className="bg-white rounded-xl shadow-md p-8">
       <h2 className="text-gray-800 mb-6">Frequently Asked Questions</h2>
       <div className="space-y-6">
-        {FaqList.map((faq, index) => (
-          <div key={index}>
+        {FaqList.map((faq) => (
+          <div key={faq.question}>
             <h3 className="text-gray-800 mb-2">{faq.question}</h3>
             <p className="text-gray-600">{faq.answer}</p>
           </div>
