@@ -29,9 +29,10 @@ describe("Footer", () => {
     expect(separators.length).toBe(2);
   });
 
-  it("does not set target on external link (current behavior)", () => {
+  it("opens external link in new tab with security attributes", () => {
     render(<Footer />);
     const github = screen.getByRole("link", { name: /github/i });
-    expect(github).not.toHaveAttribute("target");
+    expect(github).toHaveAttribute("target", "_blank");
+    expect(github).toHaveAttribute("rel", "noopener noreferrer");
   });
 });
