@@ -5,9 +5,14 @@ import { usePathname } from "next/navigation";
 
 export const Footer = () => {
   const linkList = [
-    { href: "/about", label: "About" },
-    { href: "https://github.com/honhaoz", label: "GitHub", external: true },
-    { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About", id: "footer-about" },
+    {
+      href: "https://github.com/honhaoz",
+      label: "GitHub",
+      external: true,
+      id: "footer-github",
+    },
+    { href: "/contact", label: "Contact", id: "footer-contact" },
   ];
 
   return (
@@ -18,7 +23,7 @@ export const Footer = () => {
             <>
               {link.external ? (
                 <Link
-                  key={link.href}
+                  key={link.id}
                   href={link.href}
                   className={cn("hover:text-blue-500")}
                   target="_blank"
@@ -28,7 +33,7 @@ export const Footer = () => {
                 </Link>
               ) : (
                 <Link
-                  key={link.href}
+                  key={link.id}
                   href={link.href}
                   className={cn("hover:text-blue-500")}
                 >
@@ -36,10 +41,7 @@ export const Footer = () => {
                 </Link>
               )}
               {index < linkList.length - 1 && (
-                <span
-                  key={link.href}
-                  className="hidden sm:inline text-gray-300"
-                >
+                <span key={index} className="hidden sm:inline text-gray-300">
                   |
                 </span>
               )}
