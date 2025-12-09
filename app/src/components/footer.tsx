@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 
 export const Footer = () => {
   const linkList = [
-    { href: "about", label: "About" },
+    { href: "/about", label: "About" },
     { href: "https://github.com/honhaoz", label: "GitHub", external: true },
-    { href: "contact", label: "Contact" },
+    { href: "/contact", label: "Contact" },
   ];
   const pathname = usePathname();
 
