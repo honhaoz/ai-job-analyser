@@ -125,7 +125,7 @@ const HowItWorks = () => {
       <div className="space-y-6">
         {howItWorksList.map((item) => (
           <div className="flex gap-4" key={item.number}>
-            <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-700 text-white rounded-full flex items-center justify-center">
               {item.number}
             </div>
             <div>
