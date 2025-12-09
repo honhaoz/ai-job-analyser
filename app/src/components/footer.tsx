@@ -17,13 +17,25 @@ export const Footer = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 text-sm text-gray-600">
           {linkList.map((link, index) => (
             <>
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn("hover:text-blue-500")}
-              >
-                {link.label}
-              </Link>
+              {link.external ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn("hover:text-blue-500")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn("hover:text-blue-500")}
+                >
+                  {link.label}
+                </Link>
+              )}
               {index < linkList.length - 1 && (
                 <span className="hidden sm:inline text-gray-300">|</span>
               )}
