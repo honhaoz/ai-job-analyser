@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { analyseJDAction } from "@/lib/actions/analyse";
 import { AnalysedJD } from "@/lib/services/ai";
 import { ResultCard, ResultCardProps } from "../components/result-card";
-import { File } from "../components/icon/file";
+import { FileText } from "lucide-react";
 
 export default function Home() {
   const [jobDescription, setJobDescription] = useState("");
@@ -91,9 +91,7 @@ export default function Home() {
       )}
       {!analysedJD && (
         <div className="text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <File />
-          </div>
+          <FileText className="text-gray-400 mb-4 mx-auto w-24 h-24" />
           <p className="text-gray-500">
             Paste a job description above and click "Analyse" to get started
           </p>

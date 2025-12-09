@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-
+import { Header } from "../components/header";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,26 +37,3 @@ export default function RootLayout({
     </html>
   );
 }
-const Header = () => {
-  return (
-    <header className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="cursor-pointer">
-            <h1 className="text-blue-700 text-3xl font-semibold">
-              AI-Powered Job Description analyser
-            </h1>
-            <p className="text-gray-600 mt-1">
-              Extract insights and improve your application materials instantly
-            </p>
-          </div>
-          <nav className="flex gap-6">
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/contact">Contact</Link>
-          </nav>
-        </div>
-      </div>
-    </header>
-  );
-};
