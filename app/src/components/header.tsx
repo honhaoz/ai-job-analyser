@@ -5,6 +5,12 @@ import { usePathname } from "next/navigation";
 
 export const Header = () => {
   const pathname = usePathname();
+
+  const linkList = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+  ];
   return (
     <header className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -18,33 +24,18 @@ export const Header = () => {
             </p>
           </div>
           <nav className="flex gap-6">
-            <Link
-              href="/"
-              className={cn(
-                "hover:text-blue-500",
-                pathname === "/" && "text-blue-700 font-medium"
-              )}
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className={cn(
-                "hover:text-blue-500",
-                pathname === "/about" && "text-blue-700 font-medium"
-              )}
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className={cn(
-                "hover:text-blue-500",
-                pathname === "/contact" && "text-blue-700 font-medium"
-              )}
-            >
-              Contact
-            </Link>
+            {linkList.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "hover:text-blue-500",
+                  pathname === link.href && "text-blue-700 font-medium"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
         </div>
       </div>
