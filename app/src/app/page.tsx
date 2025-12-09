@@ -3,11 +3,12 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { analyseJDAction } from "@/lib/actions/analyse";
 import { AnalysedJD } from "@/lib/services/ai";
 import { ResultCard, ResultCardProps } from "../components/result-card";
+import { File } from "../components/icon/file";
 
 export default function Home() {
   const [jobDescription, setJobDescription] = useState("");
   const [isAnalysing, setIsAnalysing] = useState(false);
-  const [result, setResult] = useState<AnalysedJD | null>(null);
+  const [analysedJD, setAnalysedJD] = useState<AnalysedJD | null>(null);
   const [error, setError] = useState<string | null>(null);
   const characterCount = jobDescription.length;
   const isValid = characterCount > 0;
@@ -24,7 +25,7 @@ export default function Home() {
       const response = await analyseJDAction(formData);
 
       if (response.success) {
-        setResult(response.data);
+        setAnalysedJD(response.data);
       } else {
         setError(response.error || "Failed to analyse");
       }
@@ -40,25 +41,25 @@ export default function Home() {
       {
         title: "Hard Skills",
         type: "skills",
-        content: result?.hardSkills ?? null,
+        content: analysedJD?.hardSkills ?? null,
       },
       {
         title: "Soft Skills",
         type: "skills",
-        content: result?.softSkills ?? null,
+        content: analysedJD?.softSkills ?? null,
       },
       {
         title: "Resume Improvement Suggestions",
         type: "tips",
-        content: result?.resumeImprovements ?? null,
+        content: analysedJD?.resumeImprovements ?? null,
       },
       {
         title: "Cover Letter Snippet",
         type: "text",
-        content: result?.coverLetterSnippet ?? null,
+        content: analysedJD?.coverLetterSnippet ?? null,
       },
     ],
-    [result]
+    [analysedJD]
   );
 
   return (
@@ -72,7 +73,7 @@ export default function Home() {
         isValid={isValid}
         error={error}
       />
-      {result && (
+      {analysedJD && (
         <div className="animate-fadeIn">
           <h2 className="text-gray-800 mb-6">Analysis Results</h2>
 
@@ -86,6 +87,16 @@ export default function Home() {
               />
             ))}
           </div>
+        </div>
+      )}
+      {!analysedJD && (
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <File />
+          </div>
+          <p className="text-gray-500">
+            Paste a job description above and click "Analyse" to get started
+          </p>
         </div>
       )}
     </>
