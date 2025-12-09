@@ -55,7 +55,7 @@ export const mockResponse: AnalysedJD = {
 
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const dev = process.env.NODE_ENV !== "production";
-  const enableAIInDev = parseEnv(process.env.ENABLE_AI);
+  const enableAIInDev = !!parseEnv(process.env.ENABLE_AI_IN_DEV);
   if (dev && !enableAIInDev) {
     // Simulate loading delay
     await new Promise((resolve) => setTimeout(resolve, 2000));

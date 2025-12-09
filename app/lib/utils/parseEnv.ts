@@ -25,15 +25,7 @@ export function parseEnv(value?: string): unknown {
   if (lower === "true" || lower === "yes") return true;
   if (lower === "false" || lower === "no") return false;
 
-  if (!isNaN(Number(trimmed))) return Number(trimmed);
-
-  // Array (comma-separated values)
-  if (trimmed.includes(",")) {
-    return trimmed
-      .split(",")
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
-  }
+  if (!Number.isNaN(Number(trimmed))) return Number(trimmed);
 
   // String (default)
   return trimmed;
