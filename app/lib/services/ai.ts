@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { parseEnv } from "../utils/parseEnv";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export type AnalysedJD = {
@@ -54,7 +55,8 @@ export const mockResponse: AnalysedJD = {
 
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const dev = process.env.NODE_ENV !== "production";
-  if (dev) {
+  const enableAIInDev = !!parseEnv(process.env.ENABLE_AI_IN_DEV);
+  if (dev && !enableAIInDev) {
     // Simulate loading delay
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log("Development mode: returning mock AI response.");
