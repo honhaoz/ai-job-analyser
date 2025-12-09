@@ -9,7 +9,6 @@ export const Footer = () => {
     { href: "https://github.com/honhaoz", label: "GitHub", external: true },
     { href: "/contact", label: "Contact" },
   ];
-  const pathname = usePathname();
 
   return (
     <footer className="bg-white border-t border-gray-200 mt-16">
@@ -37,7 +36,12 @@ export const Footer = () => {
                 </Link>
               )}
               {index < linkList.length - 1 && (
-                <span className="hidden sm:inline text-gray-300">|</span>
+                <span
+                  key={link.href}
+                  className="hidden sm:inline text-gray-300"
+                >
+                  |
+                </span>
               )}
             </>
           ))}
