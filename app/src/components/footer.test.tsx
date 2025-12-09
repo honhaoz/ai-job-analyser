@@ -18,9 +18,9 @@ describe("Footer", () => {
     const github = screen.getByRole("link", { name: /github/i });
     const contact = screen.getByRole("link", { name: /contact/i });
 
-    expect(about).toHaveAttribute("href", "about");
+    expect(about).toHaveAttribute("href", "/about");
     expect(github).toHaveAttribute("href", "https://github.com/honhaoz");
-    expect(contact).toHaveAttribute("href", "contact");
+    expect(contact).toHaveAttribute("href", "/contact");
   });
 
   it("renders separators between links on larger screens (markup present)", () => {
