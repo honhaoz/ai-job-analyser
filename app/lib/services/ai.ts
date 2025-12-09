@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { parseEnv } from "../utils/parseEnv";
+import { parseEnv } from "../utils/parse-env";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export type AnalysedJD = {
