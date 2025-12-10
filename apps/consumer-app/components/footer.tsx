@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils/styling-merger";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Fragment } from "react";
 
 export const Footer = () => {
   const linkList = [
@@ -20,10 +20,9 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 text-sm text-gray-600">
           {linkList.map((link, index) => (
-            <>
+            <Fragment key={link.id}>
               {link.external ? (
                 <Link
-                  key={link.id}
                   href={link.href}
                   className={cn("hover:text-blue-500")}
                   target="_blank"
@@ -32,20 +31,14 @@ export const Footer = () => {
                   {link.label}
                 </Link>
               ) : (
-                <Link
-                  key={link.id}
-                  href={link.href}
-                  className={cn("hover:text-blue-500")}
-                >
+                <Link href={link.href} className={cn("hover:text-blue-500")}>
                   {link.label}
                 </Link>
               )}
               {index < linkList.length - 1 && (
-                <span key={index} className="hidden sm:inline text-gray-300">
-                  |
-                </span>
+                <span className="hidden sm:inline text-gray-300">|</span>
               )}
-            </>
+            </Fragment>
           ))}
         </div>
       </div>

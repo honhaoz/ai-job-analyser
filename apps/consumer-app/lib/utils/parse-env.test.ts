@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseEnv } from "./parseEnv";
+import { parseEnv } from "./parse-env";
 
 describe("parseEnv", () => {
   describe("undefined and empty", () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Header } from "../components/header";
+import { Header } from "./header";
 
 describe("Header", () => {
   it("shows brand title and tagline", () => {
