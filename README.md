@@ -12,6 +12,10 @@ A pnpm workspace with two Next.js applications:
 - Vitest for unit testing
 - pnpm workspaces with shared CI
 
+## Demo
+
+![AI Job Analyser Demo](assets\job_analyser_demo.gif)
+
 ## Getting Started
 
 ### Prerequisites
