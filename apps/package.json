@@ -5,5 +5,15 @@
   "workspaces": [
     "admin-dashboard",
     "consumer-app"
-  ]
+  ],
+  "scripts": {
+    "dev": "pnpm --parallel --filter consumer-app --filter admin-dashboard dev",
+    "build": "pnpm --filter consumer-app --filter admin-dashboard build",
+    "lint": "pnpm --filter consumer-app --filter admin-dashboard lint",
+    "lint:fix": "pnpm --filter consumer-app --filter admin-dashboard lint:fix",
+    "format": "pnpm --filter consumer-app --filter admin-dashboard format",
+    "format:fix": "pnpm --filter consumer-app --filter admin-dashboard format:fix",
+    "typecheck": "pnpm --filter consumer-app --filter admin-dashboard typecheck",
+    "test": "pnpm --filter consumer-app --filter admin-dashboard test"
+  }
 }

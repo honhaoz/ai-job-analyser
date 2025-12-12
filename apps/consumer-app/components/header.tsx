@@ -30,7 +30,7 @@ export const Header = () => {
                 href={link.href}
                 className={cn(
                   "hover:text-blue-500",
-                  pathname === link.href && "text-blue-700 font-medium"
+                  pathname === link.href && "text-blue-700 font-medium",
                 )}
               >
                 {link.label}

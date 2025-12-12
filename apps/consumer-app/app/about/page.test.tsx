@@ -7,10 +7,12 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByRole("heading", { name: /about our platform/i, level: 1 })
+      screen.getByRole("heading", { name: /about our platform/i, level: 1 }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/AI-Powered Job Description Analyser helps job seekers/i)
+      screen.getByText(
+        /AI-Powered Job Description Analyser helps job seekers/i,
+      ),
     ).toBeInTheDocument();
   });
 
@@ -18,15 +20,15 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByRole("heading", { name: /our mission/i })
+      screen.getByRole("heading", { name: /our mission/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /We believe that finding the right job shouldn't be overwhelming/i
-      )
+        /We believe that finding the right job shouldn't be overwhelming/i,
+      ),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/By leveraging cutting-edge AI technology/i)
+      screen.getByText(/By leveraging cutting-edge AI technology/i),
     ).toBeInTheDocument();
   });
 
@@ -34,19 +36,19 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByRole("heading", { name: /why choose us\?/i })
+      screen.getByRole("heading", { name: /why choose us\?/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /AI-Powered Analysis/i })
+      screen.getByRole("heading", { name: /AI-Powered Analysis/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /Tailored Suggestions/i })
+      screen.getByRole("heading", { name: /Tailored Suggestions/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /Instant Results/i })
+      screen.getByRole("heading", { name: /Instant Results/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /Privacy Focused/i })
+      screen.getByRole("heading", { name: /Privacy Focused/i }),
     ).toBeInTheDocument();
   });
 
@@ -54,16 +56,16 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByText(/Our advanced AI technology extracts key skills/i)
+      screen.getByText(/Our advanced AI technology extracts key skills/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /Get personalised resume tips and cover letter snippets/i
-      )
+        /Get personalised resume tips and cover letter snippets/i,
+      ),
     ).toBeInTheDocument();
     expect(screen.getByText(/No waiting around/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Your data is processed securely/i)
+      screen.getByText(/Your data is processed securely/i),
     ).toBeInTheDocument();
   });
 
@@ -71,19 +73,19 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByRole("heading", { name: /how it works/i })
+      screen.getByRole("heading", { name: /how it works/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /Paste Job Description/i })
+      screen.getByRole("heading", { name: /Paste Job Description/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /AI Analysis/i })
+      screen.getByRole("heading", { name: /AI Analysis/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /Get Results/i })
+      screen.getByRole("heading", { name: /Get Results/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /Apply With Confidence/i })
+      screen.getByRole("heading", { name: /Apply With Confidence/i }),
     ).toBeInTheDocument();
   });
 
@@ -102,16 +104,16 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByText(/Copy and paste any job description into our analyser/i)
+      screen.getByText(/Copy and paste any job description into our analyser/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Our AI processes the text to extract key skills/i)
+      screen.getByText(/Our AI processes the text to extract key skills/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Receive extracted skills, resume tips/i)
+      screen.getByText(/Receive extracted skills, resume tips/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Use the insights to tailor your application/i)
+      screen.getByText(/Use the insights to tailor your application/i),
     ).toBeInTheDocument();
   });
 
@@ -119,12 +121,12 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByRole("heading", { name: /Built for Job Seekers/i })
+      screen.getByRole("heading", { name: /Built for Job Seekers/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /We're a team of developers, designers, and career professionals/i
-      )
+        /We're a team of developers, designers, and career professionals/i,
+      ),
     ).toBeInTheDocument();
   });
 

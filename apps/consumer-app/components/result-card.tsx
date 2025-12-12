@@ -73,7 +73,7 @@ export const CopyButton = ({
       const timer = setTimeout(() => setCopied(false), 2000);
       return () => clearTimeout(timer);
     }
-  }, [copied]);
+  }, [copied, setCopied]);
 
   const handleCopy = () => {
     let textToCopy = "";
@@ -87,7 +87,7 @@ export const CopyButton = ({
     try {
       navigator.clipboard.writeText(textToCopy);
       setCopied(true);
-    } catch (error) {
+    } catch (_error) {
       console.error("Failed to copy to clipboard");
       // TODO: show an error message to the user
     }

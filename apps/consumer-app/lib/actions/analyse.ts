@@ -27,7 +27,7 @@ export async function analyseJDAction(formData: FormData) {
       success: true,
       data: aiResult,
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Server action error:", err);
     if (err instanceof z.ZodError) {
       return {
