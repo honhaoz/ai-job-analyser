@@ -1,5 +1,4 @@
-"use client";
-import { Mail, Github, Linkedin, AtSign, Dot } from "lucide-react";
+import ContactInfo from "./contact-info";
 
 export default function Contact() {
   return (
@@ -23,73 +22,7 @@ const HeroSection = () => {
   );
 };
 
-const ContactInfo = () => {
-  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const user = "honghao";
-    const domain = "workmail.com";
-    window.location.href = `mailto:${user}@${domain}`;
-  };
-
-  const contactList = [
-    {
-      method: "Email Us",
-      description: "For general inquiries and support",
-      icon: <Mail className="w-6 h-6" />,
-      detail: (
-        <>
-          honghao
-          <AtSign className="w-3 h-3 inline mx-0.5" aria-label="at" />
-          workmail
-          <Dot className="w-3 h-3 inline" aria-label="dot" /> com
-        </>
-      ),
-      href: "#",
-      isEmail: true,
-    },
-    {
-      method: "GitHub",
-      description: "Contribute to our open source project",
-      icon: <Github className="w-6 h-6" />,
-      detail: "github.com/honhaoz",
-      href: "https://github.com/honhaoz",
-      isEmail: false,
-    },
-    {
-      method: "LinkedIn",
-      description: "Connect with us professionally",
-      icon: <Linkedin className="w-6 h-6" />,
-      detail: "linkedin.com/in/honghaoz",
-      href: "https://linkedin.com/in/honghaoz",
-      isEmail: false,
-    },
-  ];
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-      {contactList.map((contact) => (
-        <div key={contact.method} className="bg-white rounded-xl shadow-md p-6">
-          <div className="w-12 h-12 rounded-lg flex items-center justify-center text-blue-700 mb-4">
-            {contact.icon}
-          </div>
-          <h3 className="text-gray-800 mb-2">{contact.method}</h3>
-          <p className="text-gray-600 mb-2">{contact.description}</p>
-          {contact.detail && (
-            <a
-              href={contact.href}
-              onClick={contact.isEmail ? handleEmailClick : undefined}
-              className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer"
-              target={contact.isEmail ? undefined : "_blank"}
-              rel={contact.isEmail ? undefined : "noopener noreferrer"}
-            >
-              {contact.detail}
-            </a>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
+// ContactInfo moved to a client component in ./contact-info
 
 const FaqSection = () => {
   const faqList = [
