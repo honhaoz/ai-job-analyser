@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Apps Workspace
 
-## Getting Started
+This workspace hosts two Next.js applications managed with pnpm workspaces:
 
-First, run the development server:
+- `consumer-app`: the working, public-facing job description analyser
+- `admin-dashboard`: internal dashboard (work in progress)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Prerequisites
+
+- Node.js 20+
+- pnpm 10+
+
+## Install
+
+```powershell
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run both apps (consumer-app and admin-dashboard) in parallel:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```powershell
+pnpm run dev
+```
 
-## Learn More
+Run only the consumer app (recommended while the admin dashboard is WIP):
 
-To learn more about Next.js, take a look at the following resources:
+```powershell
+cd consumer-app
+pnpm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Build both apps:
 
-## Deploy on Vercel
+```powershell
+pnpm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Build only the consumer app:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```powershell
+cd consumer-app
+pnpm run build
+```
+
+## Quality Checks
+
+From this `apps` folder you can run checks across both apps:
+
+```powershell
+pnpm run format      # Prettier check (non-failing)
+pnpm run typecheck   # TypeScript
+pnpm run lint        # ESLint
+pnpm run lint:fix    # ESLint autofix
+pnpm run test        # Vitest
+```
+
+## CI
+
+The GitHub Actions workflow (`.github/workflows/ci.yml`) installs, builds, and runs checks for both applications on pull requests.
+
+## Notes
+
+- The admin dashboard is under active development and may not start or build reliably yet.
+- The consumer app is the primary, production-focused application.
