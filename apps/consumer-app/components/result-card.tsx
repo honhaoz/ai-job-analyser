@@ -87,8 +87,7 @@ export const CopyButton = ({
     try {
       navigator.clipboard.writeText(textToCopy);
       setCopied(true);
-      // eslint-disable-next-line
-    } catch (error) {
+    } catch (_error) {
       console.error("Failed to copy to clipboard");
       // TODO: show an error message to the user
     }

@@ -29,8 +29,7 @@ export default function Home() {
       } else {
         setError(response.error || "Failed to analyse");
       }
-      // eslint-disable-next-line
-    } catch (err) {
+    } catch (_err) {
       setError("An unexpected error occurred submitting the form.");
     } finally {
       setIsAnalysing(false);
@@ -60,7 +59,7 @@ export default function Home() {
         content: analysedJD?.coverLetterSnippet ?? null,
       },
     ],
-    [analysedJD],
+    [analysedJD]
   );
 
   return (

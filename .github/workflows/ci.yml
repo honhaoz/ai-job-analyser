@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
 
 jobs:
   ci:
@@ -39,6 +38,9 @@ jobs:
 
       - name: Install dependencies
         run: cd apps && pnpm install
+
+      - name: Build apps
+        run: cd apps && pnpm run build
 
       - name: Prettier check
         run: cd apps && pnpm run format
