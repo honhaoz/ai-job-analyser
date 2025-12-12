@@ -7,10 +7,10 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     expect(
-      screen.getByRole("heading", { name: /get in touch/i, level: 1 })
+      screen.getByRole("heading", { name: /get in touch/i, level: 1 }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Have questions, feedback, or suggestions/i)
+      screen.getByText(/Have questions, feedback, or suggestions/i),
     ).toBeInTheDocument();
   });
 
@@ -18,13 +18,13 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     expect(
-      screen.getByRole("heading", { name: /email us/i })
+      screen.getByRole("heading", { name: /email us/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /github/i })
+      screen.getByRole("heading", { name: /github/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /linkedin/i })
+      screen.getByRole("heading", { name: /linkedin/i }),
     ).toBeInTheDocument();
   });
 
@@ -32,13 +32,13 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     expect(
-      screen.getByText(/For general inquiries and support/i)
+      screen.getByText(/For general inquiries and support/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Contribute to our open source project/i)
+      screen.getByText(/Contribute to our open source project/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Connect with us professionally/i)
+      screen.getByText(/Connect with us professionally/i),
     ).toBeInTheDocument();
   });
 
@@ -73,7 +73,7 @@ describe("Contact Page", () => {
     expect(linkedinLink).toBeInTheDocument();
     expect(linkedinLink).toHaveAttribute(
       "href",
-      "https://linkedin.com/in/honghaoz"
+      "https://linkedin.com/in/honghaoz",
     );
     expect(linkedinLink).toHaveAttribute("target", "_blank");
   });
@@ -96,7 +96,7 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     expect(
-      screen.getByRole("heading", { name: /frequently asked questions/i })
+      screen.getByRole("heading", { name: /frequently asked questions/i }),
     ).toBeInTheDocument();
   });
 
@@ -104,16 +104,16 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     expect(
-      screen.getByRole("heading", { name: /is the service free\?/i })
+      screen.getByRole("heading", { name: /is the service free\?/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /do you store my data\?/i })
+      screen.getByRole("heading", { name: /do you store my data\?/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /how accurate is the ai\?/i })
+      screen.getByRole("heading", { name: /how accurate is the ai\?/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /can i suggest new features\?/i })
+      screen.getByRole("heading", { name: /can i suggest new features\?/i }),
     ).toBeInTheDocument();
   });
 
@@ -121,18 +121,18 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     expect(
-      screen.getByText(/Yes, our basic analyser is completely free to use/i)
+      screen.getByText(/Yes, our basic analyser is completely free to use/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /No, we don't store job descriptions or personal information/i
-      )
+        /No, we don't store job descriptions or personal information/i,
+      ),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Our AI is highly accurate and continuously improving/i)
+      screen.getByText(/Our AI is highly accurate and continuously improving/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/Absolutely! We'd love to hear your ideas/i)
+      screen.getByText(/Absolutely! We'd love to hear your ideas/i),
     ).toBeInTheDocument();
   });
 

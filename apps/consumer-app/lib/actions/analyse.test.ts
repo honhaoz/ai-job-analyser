@@ -33,7 +33,7 @@ describe("analyseJDAction", () => {
     const formData = new FormData();
     formData.append(
       "jobDescription",
-      "Valid job description with more than ten characters"
+      "Valid job description with more than ten characters",
     );
 
     const result = await analyseJDAction(formData);
@@ -53,7 +53,7 @@ describe("analyseJDAction", () => {
 
     expect(result.success).toBe(false);
     expect(result.error).toBe(
-      "Failed Zod validation to analyse job description"
+      "Failed Zod validation to analyse job description",
     );
   });
 });

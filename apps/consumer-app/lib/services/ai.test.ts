@@ -57,7 +57,7 @@ describe("analyseJD", () => {
     mockCreate.mockResolvedValue(mockResponse);
 
     const result = await analyseJD(
-      "Software Engineer position requiring JavaScript skills"
+      "Software Engineer position requiring JavaScript skills",
     );
 
     expect(mockCreate).toHaveBeenCalled();
@@ -72,7 +72,7 @@ describe("analyseJD", () => {
     mockCreate.mockRejectedValue(new Error("API quota exceeded"));
 
     await expect(analyseJD("Test job description")).rejects.toThrow(
-      "API quota exceeded"
+      "API quota exceeded",
     );
   });
 

@@ -8,12 +8,12 @@ describe("Header", () => {
     expect(
       screen.getByRole("heading", {
         name: /AI-Powered Job Description analyser/i,
-      })
+      }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /Extract insights and improve your application materials instantly/i
-      )
+        /Extract insights and improve your application materials instantly/i,
+      ),
     ).toBeInTheDocument();
   });
 

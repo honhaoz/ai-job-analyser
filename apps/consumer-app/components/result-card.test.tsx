@@ -15,13 +15,13 @@ describe("ResultCard", () => {
       .mockResolvedValue(undefined);
 
     vi.spyOn(navigator.clipboard, "writeText").mockImplementation(
-      writeTextMock as (data: string) => Promise<void>
+      writeTextMock as (data: string) => Promise<void>,
     );
   });
 
   it("should render null when content is null", () => {
     const { container } = render(
-      <ResultCard title="Test Title" type="skills" content={null} />
+      <ResultCard title="Test Title" type="skills" content={null} />,
     );
     expect(container.firstChild).toBe(null);
   });
@@ -39,7 +39,7 @@ describe("ResultCard", () => {
   it("should render tips type with array content", () => {
     const tips = ["Tip 1: Do this", "Tip 2: Do that"];
     render(
-      <ResultCard title="Resume Improvements" type="tips" content={tips} />
+      <ResultCard title="Resume Improvements" type="tips" content={tips} />,
     );
 
     expect(screen.getByText("Resume Improvements")).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe("ResultCard", () => {
       expect(
         screen.getByRole("button", {
           name: /copied to clipboard/i,
-        })
+        }),
       ).toBeInTheDocument();
     });
   });

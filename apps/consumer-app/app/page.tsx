@@ -59,7 +59,7 @@ export default function Home() {
         content: analysedJD?.coverLetterSnippet ?? null,
       },
     ],
-    [analysedJD]
+    [analysedJD],
   );
 
   return (
