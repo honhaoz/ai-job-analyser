@@ -29,6 +29,7 @@ export default function Home() {
       } else {
         setError(response.error || "Failed to analyse");
       }
+      // eslint-disable-next-line
     } catch (err) {
       setError("An unexpected error occurred submitting the form.");
     } finally {
