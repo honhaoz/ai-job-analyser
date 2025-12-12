@@ -63,8 +63,8 @@ pnpm run lint:fix
 
 ## Configuration
 
-- Prettier: `/.prettierrc.json` + `/.prettierignore`
-- Editor: `/.vscode/settings.json` and `/.editorconfig`
+- Prettier: `.prettierrc.json` + `.prettierignore`
+- Editor: `.vscode/settings.json` and `.editorconfig`
 - ESLint: `apps/*/eslint.config.mjs`
 - Workspace: `pnpm-workspace.yaml`
 
