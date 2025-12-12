@@ -59,7 +59,7 @@ export default function Home() {
         content: analysedJD?.coverLetterSnippet ?? null,
       },
     ],
-    [analysedJD]
+    [analysedJD],
   );
 
   return (
@@ -136,9 +136,7 @@ const InputJDForm = ({
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 gap-3">
           <div className="flex items-center gap-2">
             <span
-              className={`text-sm ${
-                isValid ? "text-gray-600" : "text-gray-400"
-              }`}
+              className={`text-sm ${isValid ? "text-gray-600" : "text-gray-400"}`}
             >
               {characterCount} characters
             </span>
