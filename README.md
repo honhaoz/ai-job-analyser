@@ -14,7 +14,7 @@ A pnpm workspace with two Next.js applications:
 
 ## Demo
 
-![AI Job Analyser Demo](assets\job_analyser_demo.gif)
+![AI Job Analyser Demo](assets/job_analyser_demo.gif)
 
 ## Getting Started
 
