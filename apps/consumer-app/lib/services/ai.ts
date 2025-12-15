@@ -77,49 +77,54 @@ and a 3–4 sentence cover letter snippet from the following job description:
 ${jobDescription}
 `;
 
-  const res = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt },
-    ],
-    response_format: {
-      type: "json_schema",
-      json_schema: {
-        name: "job_extraction",
-        strict: true,
-        schema: {
-          type: "object",
-          properties: {
-            hardSkills: {
-              type: "array",
-              items: { type: "string" },
+  try {
+    const res = await client.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "job_extraction",
+          strict: true,
+          schema: {
+            type: "object",
+            properties: {
+              hardSkills: {
+                type: "array",
+                items: { type: "string" },
+              },
+              softSkills: {
+                type: "array",
+                items: { type: "string" },
+              },
+              resumeImprovements: {
+                type: "array",
+                items: { type: "string" },
+                minItems: 3,
+                maxItems: 5,
+              },
+              coverLetterSnippet: {
+                type: "string",
+              },
             },
-            softSkills: {
-              type: "array",
-              items: { type: "string" },
-            },
-            resumeImprovements: {
-              type: "array",
-              items: { type: "string" },
-              minItems: 3,
-              maxItems: 5,
-            },
-            coverLetterSnippet: {
-              type: "string",
-            },
+            required: [
+              "hardSkills",
+              "softSkills",
+              "resumeImprovements",
+              "coverLetterSnippet",
+            ],
+            additionalProperties: false,
           },
-          required: [
-            "hardSkills",
-            "softSkills",
-            "resumeImprovements",
-            "coverLetterSnippet",
-          ],
-          additionalProperties: false,
         },
       },
-    },
-  });
+    });
 
-  return JSON.parse(res.choices[0].message.content || "{}");
+    return JSON.parse(res.choices[0].message.content || "{}");
+  } catch (_error) {
+    // TODO: Log the error details for debugging, GDPR compliant logging
+    throw new Error("Failed to analyse job description with AI");
+  }
 }

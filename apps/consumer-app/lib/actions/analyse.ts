@@ -28,14 +28,28 @@ export async function analyseJDAction(formData: FormData) {
       data: aiResult,
     };
   } catch (err: unknown) {
-    console.error("Server action error:", err);
     if (err instanceof z.ZodError) {
+      console.error("Zod validation error");
       return {
         success: false,
         error: "Failed Zod validation to analyse job description",
         data: null,
       };
     }
+
+    if (err instanceof Error) {
+      console.error("Server action error", {
+        message: err.message,
+        name: err.name,
+        time: new Date().toISOString(),
+      });
+    } else {
+      console.error("Server action error", {
+        error: "Unknown error",
+        time: new Date().toISOString(),
+      });
+    }
+
     return {
       success: false,
       error: "Failed to analyse job description",
