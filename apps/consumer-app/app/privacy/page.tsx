@@ -50,9 +50,8 @@ export default function PrivacyPolicy() {
           </p>
           <p>
             <strong>No Tracking:</strong> We do not use analytics or tracking
-            technologies to monitor individual user behaviour. Any cookies used
-            are strictly necessary for basic application functionality, if
-            applicable.
+            technologies. If any cookies are present, they are strictly
+            necessary for basic functionality.
           </p>
         </PolicySection>
 
@@ -92,10 +91,11 @@ export default function PrivacyPolicy() {
             the text is transmitted to OpenAI's servers for processing.
           </p>
           <p className="mb-3">
-            <strong>OpenAI's Data Usage:</strong> OpenAI processes the data
-            according to their privacy policy. By default, OpenAI may use API
-            inputs and outputs to improve their services. You can learn more
-            about OpenAI's data usage policies and opt-out options at{" "}
+            <strong>OpenAI's Data Usage:</strong> OpenAI processes API inputs in
+            accordance with its published API data usage policies, which may
+            include limited retention for abuse monitoring depending on account
+            configuration You can learn more about OpenAI's data usage policies
+            and opt-out options at{" "}
             <a
               href="https://openai.com/policies/privacy-policy"
               target="_blank"
