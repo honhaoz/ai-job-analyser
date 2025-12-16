@@ -23,4 +23,12 @@ describe("Warning component", () => {
     );
     expect(outer).not.toBeNull();
   });
+
+  it("has proper ARIA attributes for accessibility", () => {
+    render(<Warning message={<span>Important warning</span>} />);
+
+    const alert = screen.getByRole("alert");
+    expect(alert).toBeInTheDocument();
+    expect(alert).toHaveAttribute("aria-live", "polite");
+  });
 });
