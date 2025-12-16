@@ -10,6 +10,7 @@ export const Header = () => {
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+    { href: "/privacy", label: "Privacy Policy" },
   ];
   return (
     <header className="bg-white shadow-sm">

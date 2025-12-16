@@ -9,6 +9,7 @@ describe("Footer", () => {
     expect(screen.getByRole("link", { name: /about/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /github/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /contact/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /privacy/i })).toBeInTheDocument();
   });
 
   it("links point to the correct hrefs", () => {
@@ -26,7 +27,7 @@ describe("Footer", () => {
   it("renders separators between links on larger screens (markup present)", () => {
     render(<Footer />);
     const separators = screen.getAllByText("|");
-    expect(separators.length).toBe(2);
+    expect(separators.length).toBe(3);
   });
 
   it("opens external link in new tab with security attributes", () => {
