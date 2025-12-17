@@ -72,7 +72,7 @@ describe("analyseJD", () => {
     mockCreate.mockRejectedValue(new Error("API quota exceeded"));
 
     await expect(analyseJD("Test job description")).rejects.toThrow(
-      "API quota exceeded",
+      /Failed to analyse job description with AI/i,
     );
   });
 

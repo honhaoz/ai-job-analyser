@@ -4,6 +4,8 @@ import { analyseJDAction } from "@/lib/actions/analyse";
 import { AnalysedJD } from "@/lib/services/ai";
 import { ResultCard, ResultCardProps } from "../components/result-card";
 import { FileText } from "lucide-react";
+import { Warning } from "@/components/warning";
+import Link from "next/link";
 
 export default function Home() {
   const [jobDescription, setJobDescription] = useState("");
@@ -64,6 +66,23 @@ export default function Home() {
 
   return (
     <>
+      <Warning
+        message={
+          <p className="text-amber-800">
+            <strong>Privacy Notice:</strong> This tool uses OpenAI's API. Your
+            job description will be sent to OpenAI for processing. Do not input
+            personal or sensitive information (National Insurance number,
+            contact details, financial data, health information, etc.). This
+            tool is for analysing publicly posted job descriptions only.{" "}
+            <Link
+              href="/privacy"
+              className="underline hover:text-amber-900 transition-colors"
+            >
+              Read our Privacy Policy
+            </Link>
+          </p>
+        }
+      />
       <InputJDForm
         jobDescription={jobDescription}
         characterCount={characterCount}

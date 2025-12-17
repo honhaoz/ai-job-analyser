@@ -13,6 +13,7 @@ export const Footer = () => {
       id: "footer-github",
     },
     { href: "/contact", label: "Contact", id: "footer-contact" },
+    { href: "/privacy", label: "Privacy Policy", id: "footer-privacy" },
   ];
 
   return (
