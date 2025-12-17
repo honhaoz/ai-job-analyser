@@ -17,19 +17,22 @@ describe("Header", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders navigation links to Home, About, Contact", () => {
+  it("renders navigation links to Home, About, Contact, Privacy Policy", () => {
     render(<Header />);
 
     const home = screen.getByRole("link", { name: /home/i });
     const about = screen.getByRole("link", { name: /about/i });
     const contact = screen.getByRole("link", { name: /contact/i });
+    const privacy = screen.getByRole("link", { name: /privacy policy/i });
 
     expect(home).toBeInTheDocument();
     expect(about).toBeInTheDocument();
     expect(contact).toBeInTheDocument();
+    expect(privacy).toBeInTheDocument();
 
     expect(home).toHaveAttribute("href", "/");
     expect(about).toHaveAttribute("href", "/about");
     expect(contact).toHaveAttribute("href", "/contact");
+    expect(privacy).toHaveAttribute("href", "/privacy");
   });
 });
