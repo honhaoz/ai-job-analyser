@@ -3,7 +3,6 @@ export const Warning = ({ message }: { message: React.ReactNode }) => {
     <div
       className="bg-amber-50 border-l-4 border-amber-400 p-4 mb-6 rounded-r-lg"
       role="alert"
-      aria-live="polite"
     >
       <div className="flex">
         <div className="shrink-0">⚠️</div>
