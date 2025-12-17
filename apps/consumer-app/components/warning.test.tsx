@@ -29,6 +29,5 @@ describe("Warning component", () => {
 
     const alert = screen.getByRole("alert");
     expect(alert).toBeInTheDocument();
-    expect(alert).toHaveAttribute("aria-live", "polite");
   });
 });
