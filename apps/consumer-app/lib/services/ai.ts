@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { removePII } from "@coffeeandfun/remove-pii";
 import { parseEnv } from "../utils/parse-env";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -62,6 +63,8 @@ export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
     console.log("Development mode: returning mock AI response.");
     return mockResponse;
   }
+  // Sanitize the incoming job description to remove any PII before sending to OpenAI
+  const sanitizedJD = removePII(jobDescription);
   const systemPrompt = `
 You are an AI that analyses job descriptions ONLY.
 You must NOT output any personal data or sensitive information.
@@ -74,7 +77,7 @@ Always return anonymized, non-identifying results.
 Extract the hard skills, soft skills, resume improvements, 
 and a 3–4 sentence cover letter snippet from the following job description:
 
-${jobDescription}
+${sanitizedJD}
 `;
 
   try {
