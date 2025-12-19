@@ -113,4 +113,47 @@ describe("analyseJD", () => {
 
     expect(result).toEqual({});
   });
+
+  it("should sanitize PII from AI output", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+
+    const mockResponseWithPII = {
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              hardSkills: [
+                "JavaScript john@example.com",
+                "React 555-123-4567",
+                "Node.js",
+              ],
+              softSkills: ["Communication john@example.com", "Teamwork"],
+              resumeImprovements: [
+                "Contact me at jane@corp.com",
+                "My phone is 123-456-7890",
+              ],
+              coverLetterSnippet:
+                "Reach me: name, john@example.com, 123-456-7890",
+            }),
+          },
+        },
+      ],
+    };
+    mockCreate.mockResolvedValue(mockResponseWithPII);
+
+    const result = await analyseJD("JD with potential PII");
+
+    expect(mockCreate).toHaveBeenCalled();
+    expect(result.hardSkills).toEqual([
+      "JavaScript [email]",
+      "React [phone]",
+      "Node.js",
+    ]);
+    expect(result.softSkills).toEqual(["Communication [email]", "Teamwork"]);
+    expect(result.resumeImprovements).toEqual([
+      "Contact me at [email]",
+      "My phone is [phone]",
+    ]);
+    expect(result.coverLetterSnippet).toBe("Reach me: name, [email], [phone]");
+  });
 });

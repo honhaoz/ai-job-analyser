@@ -54,6 +54,33 @@ export const mockResponse: AnalysedJD = {
     "I am excited about the opportunity to join {{company}} as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at {{company}}.",
 };
 
+function sanitizeAnalysedJD(data: AnalysedJD): AnalysedJD {
+  const highPrivacy = {
+    email: { remove: true, replacement: "[email]" },
+    phone: { remove: true, replacement: "[phone]" },
+    ssn: { remove: true, replacement: "[ssn]" },
+    creditCard: { remove: true, replacement: "[creditCard]" },
+    address: { remove: true, replacement: "[address]" },
+    passport: { remove: true, replacement: "[passport]" },
+    driversLicense: { remove: true, replacement: "[driversLicense]" },
+    ipAddress: { remove: true, replacement: "[ipAddress]" },
+    zipCode: { remove: true, replacement: "[zipCode]" },
+    bankAccount: { remove: true, replacement: "[bankAccount]" },
+    url: { remove: true, replacement: "[url]" },
+    dateOfBirth: { remove: true, replacement: "[dateOfBirth]" },
+  };
+  const clean = (s: string) => removePII(s, highPrivacy).trim();
+  const cleanArray = (arr: string[]) =>
+    Array.isArray(arr) ? arr.map((v) => clean(v)) : [];
+
+  return {
+    hardSkills: cleanArray(data.hardSkills),
+    softSkills: cleanArray(data.softSkills),
+    resumeImprovements: cleanArray(data.resumeImprovements),
+    coverLetterSnippet: clean(data.coverLetterSnippet),
+  };
+}
+
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const dev = process.env.NODE_ENV !== "production";
   const enableAIInDev = !!parseEnv(process.env.ENABLE_AI_IN_DEV);
@@ -125,7 +152,12 @@ ${sanitizedJD}
       },
     });
 
-    return JSON.parse(res.choices[0].message.content || "{}");
+    const content = res.choices?.[0]?.message?.content ?? "";
+    if (!content.trim()) {
+      return JSON.parse("{}");
+    }
+    const parsed = JSON.parse(content);
+    return sanitizeAnalysedJD(parsed);
   } catch (_error) {
     // TODO: Log the error details for debugging, GDPR compliant logging
     throw new Error("Failed to analyse job description with AI");
