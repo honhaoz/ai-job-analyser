@@ -16,7 +16,6 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@coffeeandfun/remove-pii": "^2.0.0",
     "@testing-library/react": "^16.3.0",
     "autoprefixer": "^10.4.22",
     "clsx": "^2.1.1",

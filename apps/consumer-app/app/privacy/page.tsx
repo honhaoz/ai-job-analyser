@@ -25,10 +25,7 @@ export default function PrivacyPolicy() {
             <strong>Data Processing:</strong> When you use the analysis feature,
             the job description text you provide is sent to OpenAI's API for
             processing. OpenAI processes this data according to their privacy
-            policy and data usage policies. As a protective measure, we apply
-            basic automated filtering to reduce the likelihood of personal or
-            sensitive information being sent to the AI service. This filtering
-            is not guaranteed to detect all personal data.
+            policy and data usage policies.
           </p>
           <p className="mb-3">
             <strong>No Long-Term Storage:</strong> We do not store your job
