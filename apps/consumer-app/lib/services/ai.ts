@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { removePII } from "@coffeeandfun/remove-pii";
 import { parseEnv } from "../utils/parse-env";
+import { removeBasicPII, sanitiseAnalysedJD } from "../utils/remove-basic-pii";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export type AnalysedJD = {
@@ -8,21 +9,6 @@ export type AnalysedJD = {
   softSkills: string[];
   resumeImprovements: string[];
   coverLetterSnippet: string;
-};
-
-const HIGH_PRIVACY_CONFIG = {
-  email: { remove: true, replacement: "[email]" },
-  phone: { remove: true, replacement: "[phone]" },
-  ssn: { remove: true, replacement: "[ssn]" },
-  creditCard: { remove: true, replacement: "[creditCard]" },
-  address: { remove: true, replacement: "[address]" },
-  passport: { remove: true, replacement: "[passport]" },
-  driversLicense: { remove: true, replacement: "[driversLicense]" },
-  ipAddress: { remove: true, replacement: "[ipAddress]" },
-  zipCode: { remove: true, replacement: "[zipCode]" },
-  bankAccount: { remove: true, replacement: "[bankAccount]" },
-  url: { remove: true, replacement: "[url]" },
-  dateOfBirth: { remove: true, replacement: "[dateOfBirth]" },
 };
 
 export const mockResponse: AnalysedJD = {
@@ -69,19 +55,6 @@ export const mockResponse: AnalysedJD = {
     "I am excited about the opportunity to join {{company}} as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at {{company}}.",
 };
 
-export function sanitiseAnalysedJD(data: AnalysedJD): AnalysedJD {
-  const clean = (s: string) => removePII(s, HIGH_PRIVACY_CONFIG).trim();
-  const cleanArray = (arr: string[]) =>
-    Array.isArray(arr) ? arr.map((v) => clean(v)) : [];
-
-  return {
-    hardSkills: cleanArray(data.hardSkills),
-    softSkills: cleanArray(data.softSkills),
-    resumeImprovements: cleanArray(data.resumeImprovements),
-    coverLetterSnippet: clean(data.coverLetterSnippet),
-  };
-}
-
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const dev = process.env.NODE_ENV !== "production";
   const enableAIInDev = !!parseEnv(process.env.ENABLE_AI_IN_DEV);
@@ -92,7 +65,7 @@ export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
     return mockResponse;
   }
   // sanitise the incoming job description to remove any PII before sending to OpenAI
-  const sanitisedJD = removePII(jobDescription, HIGH_PRIVACY_CONFIG);
+  const sanitisedJD = removeBasicPII(jobDescription);
   const systemPrompt = `
 You are an AI that analyses job descriptions ONLY.
 You must NOT output any personal data or sensitive information.
