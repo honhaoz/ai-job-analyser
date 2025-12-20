@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { analyseJD, sanitizeAnalysedJD } from "./ai";
+import { analyseJD, sanitizeAnalysedJD, type AnalysedJD } from "./ai";
 
 const mockCreate = vi.fn();
 
@@ -179,14 +179,14 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle null values gracefully", () => {
-    const input = {
+    const input: Partial<AnalysedJD> = {
       hardSkills: null as unknown as string[],
       softSkills: null as unknown as string[],
       resumeImprovements: null as unknown as string[],
       coverLetterSnippet: null as unknown as string,
     };
 
-    const result = sanitizeAnalysedJD(input);
+    const result = sanitizeAnalysedJD(input as AnalysedJD);
 
     expect(result.hardSkills).toEqual([]);
     expect(result.softSkills).toEqual([]);
@@ -195,14 +195,14 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle undefined values gracefully", () => {
-    const input = {
-      hardSkills: undefined as unknown as string[],
-      softSkills: undefined as unknown as string[],
-      resumeImprovements: undefined as unknown as string[],
-      coverLetterSnippet: undefined as unknown as string,
+    const input: Partial<AnalysedJD> = {
+      hardSkills: undefined,
+      softSkills: undefined,
+      resumeImprovements: undefined,
+      coverLetterSnippet: undefined,
     };
 
-    const result = sanitizeAnalysedJD(input);
+    const result = sanitizeAnalysedJD(input as AnalysedJD);
 
     expect(result.hardSkills).toEqual([]);
     expect(result.softSkills).toEqual([]);
@@ -211,7 +211,7 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle empty strings", () => {
-    const input = {
+    const input: AnalysedJD = {
       hardSkills: ["", "JavaScript", ""],
       softSkills: [""],
       resumeImprovements: ["", "", ""],
@@ -227,7 +227,7 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle empty arrays", () => {
-    const input = {
+    const input: AnalysedJD = {
       hardSkills: [],
       softSkills: [],
       resumeImprovements: [],
@@ -243,14 +243,14 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle malformed data structures (non-array for array fields)", () => {
-    const input = {
+    const input: Partial<AnalysedJD> = {
       hardSkills: "not an array" as unknown as string[],
       softSkills: 123 as unknown as string[],
       resumeImprovements: { key: "value" } as unknown as string[],
       coverLetterSnippet: "Valid string",
     };
 
-    const result = sanitizeAnalysedJD(input);
+    const result = sanitizeAnalysedJD(input as AnalysedJD);
 
     expect(result.hardSkills).toEqual([]);
     expect(result.softSkills).toEqual([]);

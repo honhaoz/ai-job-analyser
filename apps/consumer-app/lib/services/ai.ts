@@ -70,7 +70,7 @@ export function sanitizeAnalysedJD(data: AnalysedJD): AnalysedJD {
     dateOfBirth: { remove: true, replacement: "[dateOfBirth]" },
   };
   const clean = (s: string) => {
-    if (s == null) return "";
+    if (s === null || s === undefined) return "";
     return removePII(s, highPrivacy).trim();
   };
   const cleanArray = (arr: string[]) =>
