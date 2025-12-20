@@ -111,7 +111,12 @@ describe("analyseJD", () => {
 
     const result = await analyseJD("Test job description");
 
-    expect(result).toEqual({});
+    expect(result).toEqual({
+      hardSkills: [],
+      softSkills: [],
+      resumeImprovements: [],
+      coverLetterSnippet: "",
+    });
   });
 
   it("should sanitize PII from AI output", async () => {
