@@ -154,7 +154,12 @@ ${sanitizedJD}
 
     const content = res.choices?.[0]?.message?.content ?? "";
     if (!content.trim()) {
-      return JSON.parse("{}");
+      return {
+        hardSkills: [],
+        softSkills: [],
+        resumeImprovements: [],
+        coverLetterSnippet: "",
+      };
     }
     const parsed = JSON.parse(content);
     return sanitizeAnalysedJD(parsed);
