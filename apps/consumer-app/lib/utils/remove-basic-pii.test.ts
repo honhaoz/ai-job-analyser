@@ -1,4 +1,7 @@
 import { removeBasicPII } from "./remove-basic-pii";
+import { describe, it, expect } from "vitest";
+import type { AnalysedJD } from "../services/ai";
+import { sanitiseAnalysedJD } from "./remove-basic-pii";
 
 describe("removeBasicPII (integration with real library)", () => {
   it("replaces emails, phones and urls, and trims whitespace", () => {
@@ -37,9 +40,6 @@ describe("removeBasicPII (integration with real library)", () => {
     expect(out).toBe("Just some regular content without identifiers");
   });
 });
-import { describe, it, expect } from "vitest";
-import type { AnalysedJD } from "../services/ai";
-import { sanitiseAnalysedJD } from "./remove-basic-pii";
 
 describe("sanitiseAnalysedJD (integration with real remove-pii)", () => {
   it("replaces emails, phones, and urls; trims whitespace", () => {
