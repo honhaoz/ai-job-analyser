@@ -119,7 +119,7 @@ describe("analyseJD", () => {
     });
   });
 
-  it("should sanitize PII from AI output", async () => {
+  it("should sanitise PII from AI output", async () => {
     vi.stubEnv("NODE_ENV", "production");
 
     const mockResponseWithPII = {
