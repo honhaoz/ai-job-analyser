@@ -180,10 +180,10 @@ describe("sanitizeAnalysedJD", () => {
 
   it("should handle null values gracefully", () => {
     const input = {
-      hardSkills: null as any,
-      softSkills: null as any,
-      resumeImprovements: null as any,
-      coverLetterSnippet: null as any,
+      hardSkills: null as unknown as string[],
+      softSkills: null as unknown as string[],
+      resumeImprovements: null as unknown as string[],
+      coverLetterSnippet: null as unknown as string,
     };
 
     const result = sanitizeAnalysedJD(input);
@@ -196,10 +196,10 @@ describe("sanitizeAnalysedJD", () => {
 
   it("should handle undefined values gracefully", () => {
     const input = {
-      hardSkills: undefined as any,
-      softSkills: undefined as any,
-      resumeImprovements: undefined as any,
-      coverLetterSnippet: undefined as any,
+      hardSkills: undefined as unknown as string[],
+      softSkills: undefined as unknown as string[],
+      resumeImprovements: undefined as unknown as string[],
+      coverLetterSnippet: undefined as unknown as string,
     };
 
     const result = sanitizeAnalysedJD(input);
@@ -244,9 +244,9 @@ describe("sanitizeAnalysedJD", () => {
 
   it("should handle malformed data structures (non-array for array fields)", () => {
     const input = {
-      hardSkills: "not an array" as any,
-      softSkills: 123 as any,
-      resumeImprovements: { key: "value" } as any,
+      hardSkills: "not an array" as unknown as string[],
+      softSkills: 123 as unknown as string[],
+      resumeImprovements: { key: "value" } as unknown as string[],
       coverLetterSnippet: "Valid string",
     };
 
@@ -270,7 +270,10 @@ describe("sanitizeAnalysedJD", () => {
 
     expect(result.hardSkills).toEqual(["JavaScript", "React"]);
     expect(result.softSkills).toEqual(["Communication"]);
-    expect(result.resumeImprovements).toEqual(["Improvement 1", "Improvement 2"]);
+    expect(result.resumeImprovements).toEqual([
+      "Improvement 1",
+      "Improvement 2",
+    ]);
     expect(result.coverLetterSnippet).toBe("Cover letter with spaces");
   });
 
@@ -305,7 +308,10 @@ describe("sanitizeAnalysedJD", () => {
 
     expect(result.hardSkills).toEqual(["C++", "Node.js", "React@18"]);
     expect(result.softSkills).toEqual(["Problem-solving!", "Team@work"]);
-    expect(result.resumeImprovements).toEqual(["Use #hashtags", "Apply @mentions"]);
+    expect(result.resumeImprovements).toEqual([
+      "Use #hashtags",
+      "Apply @mentions",
+    ]);
     expect(result.coverLetterSnippet).toBe("Skills: C#, F#, and more!");
   });
 
