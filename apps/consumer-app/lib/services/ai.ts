@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { parseEnv } from "../utils/parse-env";
+import { removeBasicPII, sanitiseAnalysedJD } from "../utils/remove-basic-pii";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export type AnalysedJD = {
@@ -62,6 +63,8 @@ export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
     console.log("Development mode: returning mock AI response.");
     return mockResponse;
   }
+  // sanitise the incoming job description to remove any PII before sending to OpenAI
+  const sanitisedJD = removeBasicPII(jobDescription);
   const systemPrompt = `
 You are an AI that analyses job descriptions ONLY.
 You must NOT output any personal data or sensitive information.
@@ -74,7 +77,7 @@ Always return anonymized, non-identifying results.
 Extract the hard skills, soft skills, resume improvements, 
 and a 3–4 sentence cover letter snippet from the following job description:
 
-${jobDescription}
+${sanitisedJD}
 `;
 
   try {
@@ -122,7 +125,17 @@ ${jobDescription}
       },
     });
 
-    return JSON.parse(res.choices[0].message.content || "{}");
+    const content = res.choices?.[0]?.message?.content ?? "";
+    if (!content.trim()) {
+      return {
+        hardSkills: [],
+        softSkills: [],
+        resumeImprovements: [],
+        coverLetterSnippet: "",
+      };
+    }
+    const parsed = JSON.parse(content);
+    return sanitiseAnalysedJD(parsed);
   } catch (_error) {
     // TODO: Log the error details for debugging, GDPR compliant logging
     throw new Error("Failed to analyse job description with AI");
