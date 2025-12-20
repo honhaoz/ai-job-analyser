@@ -69,7 +69,7 @@ export function sanitizeAnalysedJD(data: AnalysedJD): AnalysedJD {
     url: { remove: true, replacement: "[url]" },
     dateOfBirth: { remove: true, replacement: "[dateOfBirth]" },
   };
-  const clean = (s: string) => {
+  const clean = (s: string | null | undefined): string => {
     if (s === null || s === undefined) return "";
     return removePII(s, highPrivacy).trim();
   };

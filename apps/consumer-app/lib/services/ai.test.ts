@@ -179,6 +179,8 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle null values gracefully", () => {
+    // Testing runtime behavior when API returns null values
+    // Type assertion needed to simulate malformed external API response
     const input: Partial<AnalysedJD> = {
       hardSkills: null as unknown as string[],
       softSkills: null as unknown as string[],
@@ -195,6 +197,7 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle undefined values gracefully", () => {
+    // Testing runtime behavior when API returns undefined values
     const input: Partial<AnalysedJD> = {
       hardSkills: undefined,
       softSkills: undefined,
@@ -243,6 +246,8 @@ describe("sanitizeAnalysedJD", () => {
   });
 
   it("should handle malformed data structures (non-array for array fields)", () => {
+    // Testing runtime behavior when API returns wrong types
+    // Type assertions needed to simulate malformed external API response
     const input: Partial<AnalysedJD> = {
       hardSkills: "not an array" as unknown as string[],
       softSkills: 123 as unknown as string[],
