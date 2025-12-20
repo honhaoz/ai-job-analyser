@@ -1,3 +1,42 @@
+import { removeBasicPII } from "./remove-basic-pii";
+
+describe("removeBasicPII (integration with real library)", () => {
+  it("replaces emails, phones and urls, and trims whitespace", () => {
+    const input =
+      "  Contact: john.doe@example.com, (123) 456-7890, https://example.com  ";
+    const out = removeBasicPII(input);
+    expect(out).toBe("Contact: [email], [phone], [url]");
+  });
+
+  it("handles common phone formats", () => {
+    const a = removeBasicPII("Call me at 555-123-4567");
+    const b = removeBasicPII("Call me at (555) 123-4567");
+    const c = removeBasicPII("Call me at +15551234567");
+    expect(a).toBe("Call me at [phone]");
+    expect(b).toBe("Call me at [phone]");
+    // E.164 format should be detected by the library
+    expect(c).toBe("Call me at [phone]");
+  });
+
+  it("is idempotent (second pass doesn't change result)", () => {
+    const first = removeBasicPII(
+      "Email john@example.com and site https://example.com",
+    );
+    const second = removeBasicPII(first);
+    expect(second).toBe(first);
+  });
+
+  it("returns empty string for empty/whitespace input", () => {
+    expect(removeBasicPII("   ")).toBe("");
+    expect(removeBasicPII("")).toBe("");
+  });
+
+  it("leaves non-PII text unchanged except for trimming", () => {
+    const input = "  Just some regular content without identifiers  ";
+    const out = removeBasicPII(input);
+    expect(out).toBe("Just some regular content without identifiers");
+  });
+});
 import { describe, it, expect } from "vitest";
 import type { AnalysedJD } from "../services/ai";
 import { sanitiseAnalysedJD } from "./remove-basic-pii";

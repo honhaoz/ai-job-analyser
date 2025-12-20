@@ -1,5 +1,4 @@
 import OpenAI from "openai";
-import { removePII } from "@coffeeandfun/remove-pii";
 import { parseEnv } from "../utils/parse-env";
 import { removeBasicPII, sanitiseAnalysedJD } from "../utils/remove-basic-pii";
 
@@ -142,27 +141,3 @@ ${sanitisedJD}
     throw new Error("Failed to analyse job description with AI");
   }
 }
-export default {
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.openai.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
-          },
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "DENY" },
-          { key: "Referrer-Policy", value: "no-referrer" },
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
-          },
-        ],
-      },
-    ];
-  },
-  reactCompiler: true,
-} satisfies import("next").NextConfig;
