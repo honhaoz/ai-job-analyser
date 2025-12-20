@@ -54,7 +54,7 @@ export const mockResponse: AnalysedJD = {
     "I am excited about the opportunity to join {{company}} as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at {{company}}.",
 };
 
-function sanitizeAnalysedJD(data: AnalysedJD): AnalysedJD {
+export function sanitizeAnalysedJD(data: AnalysedJD): AnalysedJD {
   const highPrivacy = {
     email: { remove: true, replacement: "[email]" },
     phone: { remove: true, replacement: "[phone]" },
@@ -69,7 +69,10 @@ function sanitizeAnalysedJD(data: AnalysedJD): AnalysedJD {
     url: { remove: true, replacement: "[url]" },
     dateOfBirth: { remove: true, replacement: "[dateOfBirth]" },
   };
-  const clean = (s: string) => removePII(s, highPrivacy).trim();
+  const clean = (s: string) => {
+    if (s == null) return "";
+    return removePII(s, highPrivacy).trim();
+  };
   const cleanArray = (arr: string[]) =>
     Array.isArray(arr) ? arr.map((v) => clean(v)) : [];
 
