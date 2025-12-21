@@ -1,8 +1,6 @@
 import OpenAI from "openai";
-import { parseEnv } from "../utils/parse-env";
 import { removeBasicPII, sanitiseAnalysedJD } from "../utils/remove-basic-pii";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export type AnalysedJD = {
   hardSkills: string[];
   softSkills: string[];
@@ -10,59 +8,24 @@ export type AnalysedJD = {
   coverLetterSnippet: string;
 };
 
-export const mockResponse: AnalysedJD = {
-  hardSkills: [
-    "Microsoft Azure",
-    "Google Cloud Platform",
-    "Azure WAF",
-    "Google Cloud Armor",
-    "Google Model Armor",
-    "VPCSC",
-    "Azure Firewall",
-    "Google VPC Firewall",
-    "Azure NGFW",
-    "Google Cloud NGFW",
-    "GitHub",
-    "Terraform",
-    "Azure Policy",
-    "Google Organization Policy",
-    "Infrastructure as Code",
-    "DevOps",
-    "Continuous Integration",
-    "Continuous Delivery",
-    "Agile development",
-    "Jira",
-    "Confluence",
-  ],
-  softSkills: [
-    "Self-starter",
-    "Ability to learn quickly",
-    "Listening skills",
-    "Respect for others' views",
-    "Communication",
-    "Problem-solving",
-    "Environmental awareness",
-    "Teamwork",
-    "Passion for automation",
-  ],
-  resumeImprovements: [
-    "Highlight experience with cloud technologies",
-    "Emphasize agile team collaboration",
-    "Showcase personal development pursuits and learning initiatives",
-  ],
-  coverLetterSnippet:
-    "I am excited about the opportunity to join {{company}} as a Junior Software Engineer. With my background in cloud technologies and a strong passion for automation, I am eager to contribute to a collaborative agile team. I believe my skills in Microsoft Azure and DevOps practices will enable me to effectively support and improve the innovative projects at {{company}}.",
-};
-
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
-  const dev = process.env.NODE_ENV !== "production";
-  const enableAIInDev = !!parseEnv(process.env.ENABLE_AI_IN_DEV);
-  if (dev && !enableAIInDev) {
-    // Simulate loading delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Development mode: returning mock AI response.");
-    return mockResponse;
-  }
+  const isDev = process.env.NODE_ENV !== "production";
+  const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
+  const client = new OpenAI({
+    baseURL: isDev
+      ? devProvider === "openai"
+        ? "https://api.openai.com/v1"
+        : process.env.OLLAMA_BASE_URL
+      : "https://api.openai.com/v1",
+    apiKey: isDev
+      ? devProvider === "openai"
+        ? process.env.OPENAI_API_KEY
+        : "ollama"
+      : process.env.OPENAI_API_KEY,
+  });
+
+  const aiModel: string = getAiModel(isDev, devProvider);
+
   // sanitise the incoming job description to remove any PII before sending to OpenAI
   const sanitisedJD = removeBasicPII(jobDescription);
   const systemPrompt = `
@@ -82,7 +45,7 @@ ${sanitisedJD}
 
   try {
     const res = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: aiModel,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
@@ -140,4 +103,26 @@ ${sanitisedJD}
     // TODO: Log the error details for debugging, GDPR compliant logging
     throw new Error("Failed to analyse job description with AI");
   }
+}
+
+function getAiModel(isDev: boolean, devProvider: string) {
+  let aiModel: string;
+  if (isDev) {
+    if (devProvider === "openai") {
+      if (!process.env.OPENAI_API_KEY) {
+        throw new Error(
+          "OPENAI_API_KEY is required for DEV_AI_PROVIDER=openai",
+        );
+      }
+      aiModel = process.env.LOCAL_DEV_AI_MODEL || "gpt-4o-mini";
+    } else {
+      if (!process.env.LOCAL_DEV_AI_MODEL) {
+        throw new Error("LOCAL_DEV_AI_MODEL environment variable is not set");
+      }
+      aiModel = process.env.LOCAL_DEV_AI_MODEL;
+    }
+  } else {
+    aiModel = "gpt-4o-mini";
+  }
+  return aiModel;
 }

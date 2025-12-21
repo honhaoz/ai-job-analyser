@@ -1,5 +1,9 @@
 # AI Job Analyser Monorepo
 
+> ⚠️ Reminder: Do not input sensitive or personally identifiable information (PII) during local testing.
+
+> ⚠️ Note: Some models have restrictive licenses. Ensure you comply with the model's license before using it. Local models may require significant CPU/GPU and RAM.
+
 A pnpm workspace with two Next.js applications:
 
 - `apps/consumer-app`: Public-facing job description analyser
@@ -22,6 +26,11 @@ A pnpm workspace with two Next.js applications:
 
 - Node.js 20+
 - pnpm 10+
+
+Optionally for local AI development:
+
+- Ollama installed (Windows/macOS/Linux)
+- A local model pulled (e.g., `mistral`)
 
 ### Install
 
@@ -84,14 +93,75 @@ GitHub Actions workflow at `.github/workflows/ci.yml`:
 
 ## Environment Variables
 
-`consumer-app` uses environment variables for AI services. Create `.env.local` in `apps/consumer-app`:
+`consumer-app` uses environment variables for AI services. Create `.env.local` in `apps/consumer-app` depending on your mode.
+
+#### Local development with Ollama (recommended for dev)
+
+The app can call a local LLM via Ollama. In development (`NODE_ENV !== 'production'`), it requires a model name and base URL.
+
+1. Install Ollama:
+
+download from https://ollama.com and install
+
+````
+2. Pull a local model via Ollama (replace `<model_name:version>` with your chosen model):
+
+```powershell
+ollama pull <model_name:version>
+# Example: ollama pull mistral:latest
+
+3. Configure `apps/consumer-app/.env.local`:
 
 ```
-OPENAI_API_KEY=your_key
-NODE_ENV=development
+# Local dev AI
+LOCAL_DEV_AI_MODEL=<model_name:version>
+OLLAMA_BASE_URL=http://localhost:11434/v1
 ```
 
-Do not commit any secrets.
+Start the app:
+
+```powershell
+cd apps/consumer-app
+pnpm dev
+```
+
+#### Local development with OpenAI
+
+Prefer using your OpenAI account locally? Set the provider to `openai` and use your API key. This runs dev mode against OpenAI instead of Ollama.
+
+1. Create `apps/consumer-app/.env.local`:
+
+```
+# Use OpenAI in dev
+DEV_AI_PROVIDER=openai
+OPENAI_API_KEY=sk-...
+LOCAL_DEV_AI_MODEL=gpt-4o-mini
+```
+
+2. Start the app:
+
+```powershell
+cd apps/consumer-app
+pnpm dev
+```
+
+> Note: OpenAI usage may incur costs and requires internet access. Ensure your model selection and usage comply with OpenAI’s terms.
+
+#### Production/remote with OpenAI
+
+In production, the app calls OpenAI's API. Set:
+
+```
+OPENAI_API_KEY=sk-...
+```
+
+Run a production build:
+
+```powershell
+cd apps/consumer-app
+pnpm build
+pnpm start
+```
 
 ## Project Structure
 
@@ -111,6 +181,25 @@ apps/
 - Run `pnpm run build` and `pnpm run test` before PR
 - Ensure lint/typecheck pass
 
+### Running all tests from the workspace root
+
+```powershell
+cd apps
+pnpm run test
+```
+
+If you prefer per app:
+
+```powershell
+cd apps/consumer-app; pnpm test
+cd ../../apps/admin-dashboard; pnpm test
+```
+
 ## Licence
 
 Proprietary — internal use only.
+
+All rights reserved by Honghao Zheng. Commercial use by third parties is not permitted without explicit permission.
+
+Please ensure you comply with the license terms of any models you use locally. We are not responsible for license violations.
+````
