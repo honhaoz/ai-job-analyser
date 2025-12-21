@@ -11,19 +11,19 @@ export type AnalysedJD = {
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const isDev = process.env.NODE_ENV !== "production";
   const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
-  const client = new OpenAI({
-    baseURL: isDev
-      ? devProvider === "openai"
-        ? "https://api.openai.com/v1"
-        : process.env.OLLAMA_BASE_URL
-      : "https://api.openai.com/v1",
+  const clientConfig: { baseURL?: string; apiKey?: string } = {
     apiKey: isDev
       ? devProvider === "openai"
         ? process.env.OPENAI_API_KEY
         : "ollama"
       : process.env.OPENAI_API_KEY,
-  });
+  };
 
+  if (isDev && devProvider !== "openai") {
+    clientConfig.baseURL = process.env.OLLAMA_BASE_URL;
+  }
+
+  const client = new OpenAI(clientConfig);
   const aiModel: string = getAiModel(isDev, devProvider);
 
   // sanitise the incoming job description to remove any PII before sending to OpenAI
