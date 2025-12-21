@@ -1,10 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
+const mockCreate = vi.fn();
+
 vi.mock("openai", () => ({
   default: class MockOpenAI {
     chat = {
       completions: {
-        create: vi.fn(),
+        create: (...args: unknown[]) => mockCreate(...args),
       },
     };
   },
@@ -15,6 +17,8 @@ describe("analyseJDAction", () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
+    mockCreate.mockReset();
+    vi.unstubAllEnvs();
     const actionModule = await import("./analyse");
     analyseJDAction = actionModule.analyseJDAction;
   });
@@ -30,6 +34,29 @@ describe("analyseJDAction", () => {
   });
 
   it("should return success with AI result for valid job description", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("LOCAL_DEV_AI_MODEL", "mistral:latest");
+    vi.stubEnv("OLLAMA_BASE_URL", "http://localhost:11434/v1");
+
+    mockCreate.mockResolvedValue({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              hardSkills: ["JavaScript", "React"],
+              softSkills: ["Communication"],
+              resumeImprovements: [
+                "Add project metrics",
+                "Highlight leadership",
+                "Tailor to role",
+              ],
+              coverLetterSnippet: "Excited to contribute to your team.",
+            }),
+          },
+        },
+      ],
+    });
+
     const formData = new FormData();
     formData.append(
       "jobDescription",

@@ -103,12 +103,12 @@ The app can call a local LLM via Ollama. In development (`NODE_ENV !== 'producti
 
 download from https://ollama.com and install
 
-````
 2. Pull a local model via Ollama (replace `<model_name:version>` with your chosen model):
 
 ```powershell
 ollama pull <model_name:version>
 # Example: ollama pull mistral:latest
+```
 
 3. Configure `apps/consumer-app/.env.local`:
 
@@ -202,4 +202,3 @@ Proprietary — internal use only.
 All rights reserved by Honghao Zheng. Commercial use by third parties is not permitted without explicit permission.
 
 Please ensure you comply with the license terms of any models you use locally. We are not responsible for license violations.
-````
