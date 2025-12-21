@@ -34,8 +34,8 @@ function getAiModel(isDev: boolean, devProvider: string) {
 let clientInstance: OpenAI | null = null;
 let aiModelCache: string | null = null;
 
-function getOrCreateClient() {
-  if (!clientInstance) {
+function getOrCreateClient(): { client: OpenAI; aiModel: string } {
+  if (!clientInstance || !aiModelCache) {
     const isDev = process.env.NODE_ENV !== "production";
     const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
     
@@ -55,7 +55,7 @@ function getOrCreateClient() {
     aiModelCache = getAiModel(isDev, devProvider);
   }
   
-  return { client: clientInstance, aiModel: aiModelCache! };
+  return { client: clientInstance, aiModel: aiModelCache };
 }
 
 export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
