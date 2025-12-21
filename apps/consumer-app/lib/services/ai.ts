@@ -8,23 +8,58 @@ export type AnalysedJD = {
   coverLetterSnippet: string;
 };
 
-export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
-  const isDev = process.env.NODE_ENV !== "production";
-  const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
-  const client = new OpenAI({
-    baseURL: isDev
-      ? devProvider === "openai"
-        ? "https://api.openai.com/v1"
-        : process.env.OLLAMA_BASE_URL
-      : "https://api.openai.com/v1",
-    apiKey: isDev
-      ? devProvider === "openai"
-        ? process.env.OPENAI_API_KEY
-        : "ollama"
-      : process.env.OPENAI_API_KEY,
-  });
+function getAiModel(isDev: boolean, devProvider: string) {
+  let aiModel: string;
+  if (isDev) {
+    if (devProvider === "openai") {
+      if (!process.env.OPENAI_API_KEY) {
+        throw new Error(
+          "OPENAI_API_KEY is required for DEV_AI_PROVIDER=openai",
+        );
+      }
+      aiModel = process.env.LOCAL_DEV_AI_MODEL || "gpt-4o-mini";
+    } else {
+      if (!process.env.LOCAL_DEV_AI_MODEL) {
+        throw new Error("LOCAL_DEV_AI_MODEL environment variable is not set");
+      }
+      aiModel = process.env.LOCAL_DEV_AI_MODEL;
+    }
+  } else {
+    aiModel = "gpt-4o-mini";
+  }
+  return aiModel;
+}
 
-  const aiModel: string = getAiModel(isDev, devProvider);
+// Lazy-initialized singleton client and configuration
+let clientInstance: OpenAI | null = null;
+let aiModelCache: string | null = null;
+
+function getOrCreateClient() {
+  if (!clientInstance) {
+    const isDev = process.env.NODE_ENV !== "production";
+    const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
+    
+    clientInstance = new OpenAI({
+      baseURL: isDev
+        ? devProvider === "openai"
+          ? "https://api.openai.com/v1"
+          : process.env.OLLAMA_BASE_URL
+        : "https://api.openai.com/v1",
+      apiKey: isDev
+        ? devProvider === "openai"
+          ? process.env.OPENAI_API_KEY
+          : "ollama"
+        : process.env.OPENAI_API_KEY,
+    });
+    
+    aiModelCache = getAiModel(isDev, devProvider);
+  }
+  
+  return { client: clientInstance, aiModel: aiModelCache! };
+}
+
+export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
+  const { client, aiModel } = getOrCreateClient();
 
   // sanitise the incoming job description to remove any PII before sending to OpenAI
   const sanitisedJD = removeBasicPII(jobDescription);
@@ -103,26 +138,4 @@ ${sanitisedJD}
     // TODO: Log the error details for debugging, GDPR compliant logging
     throw new Error("Failed to analyse job description with AI");
   }
-}
-
-function getAiModel(isDev: boolean, devProvider: string) {
-  let aiModel: string;
-  if (isDev) {
-    if (devProvider === "openai") {
-      if (!process.env.OPENAI_API_KEY) {
-        throw new Error(
-          "OPENAI_API_KEY is required for DEV_AI_PROVIDER=openai",
-        );
-      }
-      aiModel = process.env.LOCAL_DEV_AI_MODEL || "gpt-4o-mini";
-    } else {
-      if (!process.env.LOCAL_DEV_AI_MODEL) {
-        throw new Error("LOCAL_DEV_AI_MODEL environment variable is not set");
-      }
-      aiModel = process.env.LOCAL_DEV_AI_MODEL;
-    }
-  } else {
-    aiModel = "gpt-4o-mini";
-  }
-  return aiModel;
 }
