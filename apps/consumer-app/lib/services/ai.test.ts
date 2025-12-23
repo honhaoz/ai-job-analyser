@@ -21,15 +21,39 @@ describe("analyseJD", () => {
     mockCreate.mockClear();
   });
 
-  it("should return mock data in development mode", async () => {
-    const result = await analyseJD("Test job description");
+  it("should call local AI (Ollama) in development mode when env is set", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("LOCAL_DEV_AI_MODEL", "mistral:latest");
+    vi.stubEnv("OLLAMA_BASE_URL", "http://localhost:11434/v1");
 
-    expect(result).toHaveProperty("hardSkills");
-    expect(result).toHaveProperty("softSkills");
-    expect(result).toHaveProperty("resumeImprovements");
-    expect(result).toHaveProperty("coverLetterSnippet");
-    expect(Array.isArray(result.hardSkills)).toBe(true);
-    expect(Array.isArray(result.softSkills)).toBe(true);
+    const mockResponse = {
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              hardSkills: ["JavaScript", "React"],
+              softSkills: ["Communication"],
+              resumeImprovements: [
+                "Add project metrics",
+                "Highlight leadership",
+                "Tailor to role",
+              ],
+              coverLetterSnippet: "Excited to contribute to your team.",
+            }),
+          },
+        },
+      ],
+    };
+
+    mockCreate.mockResolvedValue(mockResponse);
+
+    const result = await analyseJD("Developer role JD");
+
+    expect(mockCreate).toHaveBeenCalled();
+    expect(result.hardSkills).toEqual(["JavaScript", "React"]);
+    expect(result.softSkills).toEqual(["Communication"]);
+    expect(result.resumeImprovements).toHaveLength(3);
+    expect(typeof result.coverLetterSnippet).toBe("string");
   });
 
   it("should call OpenAI API in production mode", async () => {
