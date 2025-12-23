@@ -37,7 +37,7 @@ export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const client = getOpenAIClient();
   const aiModel: string = getAiModel(isDev, devProvider);
 
-  // sanitise the incoming job description to remove any PII before sending to OpenAI
+  // sanitise the incoming job description to remove any PII before sending to the AI service
   const sanitisedJD = removeBasicPII(jobDescription);
   const systemPrompt = `
 You are an AI that analyses job descriptions ONLY.
