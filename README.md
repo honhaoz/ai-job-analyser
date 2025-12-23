@@ -101,7 +101,7 @@ The app can call a local LLM via Ollama. In development (`NODE_ENV !== 'producti
 
 1. Install Ollama:
 
-download from https://ollama.com and install
+   - Download from https://ollama.com and install it.
 
 2. Pull a local model via Ollama (replace `<model_name:version>` with your chosen model):
 
@@ -192,7 +192,7 @@ If you prefer per app:
 
 ```powershell
 cd apps/consumer-app; pnpm test
-cd ../../apps/admin-dashboard; pnpm test
+cd ../admin-dashboard; pnpm test
 ```
 
 ## Licence
