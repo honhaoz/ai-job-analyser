@@ -192,7 +192,7 @@ If you prefer per app:
 
 ```powershell
 cd apps/consumer-app; pnpm test
-cd ../../apps/admin-dashboard; pnpm test
+cd ../admin-dashboard; pnpm test
 ```
 
 ## Licence
