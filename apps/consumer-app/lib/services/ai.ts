@@ -11,10 +11,8 @@ export type AnalysedJD = {
 // Singleton instance for OpenAI client
 let openAIClient: OpenAI | null = null;
 
-function getOpenAIClient(): OpenAI {
+function getOpenAIClient(isDev: boolean, devProvider: string): OpenAI {
   if (!openAIClient) {
-    const isDev = process.env.NODE_ENV !== "production";
-    const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
     const devApiKey =
       devProvider === "openai" ? process.env.OPENAI_API_KEY : "ollama";
     const devAiBaseUrl =
@@ -34,7 +32,7 @@ export async function analyseJD(jobDescription: string): Promise<AnalysedJD> {
   const isDev = process.env.NODE_ENV !== "production";
   const devProvider = (process.env.DEV_AI_PROVIDER || "ollama").toLowerCase();
 
-  const client = getOpenAIClient();
+  const client = getOpenAIClient(isDev, devProvider);
   const aiModel: string = getAiModel(isDev, devProvider);
 
   // sanitise the incoming job description to remove any PII before sending to OpenAI
