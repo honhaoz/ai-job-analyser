@@ -95,7 +95,7 @@ export const CopyButton = ({
   return (
     <button
       onClick={handleCopy}
-      className="p-2 text-gray-400 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
+      className="p-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
       title="Copy to clipboard"
       aria-label={copied ? "Copied to clipboard" : "Copy to clipboard"}
     >

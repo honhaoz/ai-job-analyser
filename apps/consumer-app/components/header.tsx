@@ -20,7 +20,7 @@ export const Header = () => {
             <h1 className="text-blue-700 text-3xl font-semibold hover:text-blue-800 transition-colors">
               AI-Powered Job Description analyser
             </h1>
-            <p className="text-gray-600 mt-1">
+            <p className="text-gray-700 mt-1">
               Extract insights and improve your application materials instantly
             </p>
           </Link>
