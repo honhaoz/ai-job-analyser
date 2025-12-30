@@ -15,8 +15,10 @@ export default function About() {
 const HeroSection = () => {
   return (
     <div className="text-center mb-12">
-      <h1 className="text-blue-700 mb-4">About Our Platform</h1>
-      <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+      <h1 className="text-4xl font-bold text-blue-700 mb-4">
+        About Our Platform
+      </h1>
+      <p className="text-gray-700 text-lg max-w-2xl mx-auto">
         AI-Powered Job Description Analyser helps job seekers optimise their
         applications by extracting key insights from job postings and providing
         actionable recommendations.
@@ -28,7 +30,7 @@ const HeroSection = () => {
 const MissionStatement = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-8 mb-8">
-      <h2 className="text-gray-800 mb-4">Our Mission</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Our Mission</h2>
       <p className="text-gray-700 leading-relaxed mb-4">
         We believe that finding the right job shouldn't be overwhelming. Every
         day, thousands of job seekers spend hours trying to tailor their resumes
@@ -48,25 +50,25 @@ const MissionStatement = () => {
 const Features = () => {
   const features = [
     {
-      icon: <Sparkles className="w-6 h-6" />,
+      icon: <Sparkles className="w-6 h-6" aria-hidden="true" />,
       title: "AI-Powered Analysis",
       description:
         "Our advanced AI technology extracts key skills and insights from job descriptions in seconds.",
     },
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: <Target className="w-6 h-6" aria-hidden="true" />,
       title: "Tailored Suggestions",
       description:
         "Get personalised resume tips and cover letter snippets that match the specific job requirements.",
     },
     {
-      icon: <Zap className="w-6 h-6" />,
+      icon: <Zap className="w-6 h-6" aria-hidden="true" />,
       title: "Instant Results",
       description:
         "No waiting around. Analyse job descriptions and receive actionable insights immediately.",
     },
     {
-      icon: <Shield className="w-6 h-6" />,
+      icon: <Shield className="w-6 h-6" aria-hidden="true" />,
       title: "Privacy Focused",
       description:
         "Your data is processed securely. We don't store your job descriptions or personal information.",
@@ -74,7 +76,9 @@ const Features = () => {
   ];
   return (
     <div className="mb-12">
-      <h2 className="text-gray-800 mb-6 text-center">Why Choose Us?</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+        Why Choose Us?
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {features.map((feature) => (
           <div
@@ -84,8 +88,10 @@ const Features = () => {
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 mb-4">
               {feature.icon}
             </div>
-            <h3 className="text-gray-800 mb-2">{feature.title}</h3>
-            <p className="text-gray-600">{feature.description}</p>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              {feature.title}
+            </h3>
+            <p className="text-gray-700">{feature.description}</p>
           </div>
         ))}
       </div>
@@ -120,17 +126,24 @@ const HowItWorks = () => {
     },
   ];
   return (
-    <div className="bg-linear-to-br from-blue-50 to-white rounded-xl shadow-md p-8 mb-8">
-      <h2 className="text-gray-800 mb-6">How It Works</h2>
+    <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-md p-8 mb-8">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        How It Works
+      </h2>
       <div className="space-y-6">
         {howItWorksList.map((item) => (
           <div className="flex gap-4" key={item.number}>
-            <div className="w-8 h-8 bg-blue-700 text-white rounded-full flex items-center justify-center">
+            <div
+              className="w-8 h-8 bg-blue-700 text-white rounded-full flex items-center justify-center font-semibold"
+              aria-hidden="true"
+            >
               {item.number}
             </div>
             <div>
-              <h3 className="text-gray-800 mb-1">{item.heading}</h3>
-              <p className="text-gray-600">{item.description}</p>
+              <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                {item.heading}
+              </h3>
+              <p className="text-gray-700">{item.description}</p>
             </div>
           </div>
         ))}
@@ -142,8 +155,10 @@ const HowItWorks = () => {
 const TeamSection = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-8 text-center">
-      <h2 className="text-gray-800 mb-4">Built for Job Seekers</h2>
-      <p className="text-gray-600 max-w-2xl mx-auto">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Built for Job Seekers
+      </h2>
+      <p className="text-gray-700 max-w-2xl mx-auto">
         We're a team of developers, designers, and career professionals
         passionate about making job hunting easier. This tool was born from our
         own frustrations with the application process and our desire to help
