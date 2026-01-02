@@ -15,14 +15,7 @@ const ContactInfo = () => {
       method: "Email Us",
       description: "For general inquiries and support",
       icon: <Mail className="w-6 h-6" />,
-      detail: (
-        <>
-          honghao
-          <AtSign className="w-3 h-3 inline mx-0.5" aria-label="at" />
-          workmail
-          <Dot className="w-3 h-3 inline" aria-label="dot" /> com
-        </>
-      ),
+      detail: <>example@gmail.com</>,
       href: "#",
       isEmail: true,
     },
