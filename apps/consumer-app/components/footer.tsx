@@ -28,6 +28,7 @@ export const Footer = () => {
                   className={cn("hover:text-blue-500")}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${link.label} (opens in new window)`}
                 >
                   {link.label}
                 </Link>
@@ -37,7 +38,12 @@ export const Footer = () => {
                 </Link>
               )}
               {index < linkList.length - 1 && (
-                <span className="hidden sm:inline text-gray-300">|</span>
+                <span
+                  className="hidden sm:inline text-gray-300"
+                  aria-hidden="true"
+                >
+                  |
+                </span>
               )}
             </Fragment>
           ))}
