@@ -94,7 +94,9 @@ export default function Home() {
       />
       {analysedJD && (
         <div className="animate-fadeIn">
-          <h2 className="text-gray-800 mb-6">Analysis Results</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            Analysis Results
+          </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {resultCardsContent.map((card) => (

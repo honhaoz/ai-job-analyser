@@ -14,7 +14,7 @@ const ContactInfo = () => {
     {
       method: "Email Us",
       description: "For general inquiries and support",
-      icon: <Mail className="w-6 h-6" />,
+      icon: <Mail className="w-6 h-6" aria-hidden="true" />,
       detail: <>example@gmail.com</>,
       href: "#",
       isEmail: true,
@@ -22,7 +22,7 @@ const ContactInfo = () => {
     {
       method: "GitHub",
       description: "Contribute to our open source project",
-      icon: <Github className="w-6 h-6" />,
+      icon: <Github className="w-6 h-6" aria-hidden="true" />,
       detail: "github.com/honhaoz",
       href: "https://github.com/honhaoz",
       isEmail: false,
@@ -30,7 +30,7 @@ const ContactInfo = () => {
     {
       method: "LinkedIn",
       description: "Connect with us professionally",
-      icon: <Linkedin className="w-6 h-6" />,
+      icon: <Linkedin className="w-6 h-6" aria-hidden="true" />,
       detail: "linkedin.com/in/honghaoz",
       href: "https://linkedin.com/in/honghaoz",
       isEmail: false,
@@ -44,8 +44,10 @@ const ContactInfo = () => {
           <div className="w-12 h-12 rounded-lg flex items-center justify-center text-blue-700 mb-4">
             {contact.icon}
           </div>
-          <h3 className="text-gray-800 mb-2">{contact.method}</h3>
-          <p className="text-gray-600 mb-2">{contact.description}</p>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            {contact.method}
+          </h3>
+          <p className="text-gray-700 mb-2">{contact.description}</p>
           {contact.detail && (
             <a
               href={contact.href}
@@ -53,6 +55,11 @@ const ContactInfo = () => {
               className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer"
               target={contact.isEmail ? undefined : "_blank"}
               rel={contact.isEmail ? undefined : "noopener noreferrer"}
+              aria-label={
+                contact.isEmail
+                  ? "Email us"
+                  : `Visit our ${contact.method} (opens in new window)`
+              }
             >
               {contact.detail}
             </a>

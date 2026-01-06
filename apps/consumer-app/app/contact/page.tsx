@@ -13,8 +13,8 @@ export default function Contact() {
 const HeroSection = () => {
   return (
     <div className="text-center mb-12">
-      <h1 className="text-blue-700 mb-4">Get In Touch</h1>
-      <p className="text-gray-600 text-lg">
+      <h1 className="text-4xl font-bold text-blue-700 mb-4">Get In Touch</h1>
+      <p className="text-gray-700 text-lg">
         Have questions, feedback, or suggestions? We'd love to hear from you.
         Reach out through our social channels.
       </p>
@@ -50,12 +50,16 @@ const FaqSection = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-md p-8">
-      <h2 className="text-gray-800 mb-6">Frequently Asked Questions</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        Frequently Asked Questions
+      </h2>
       <div className="space-y-6">
         {faqList.map((faq) => (
           <div key={faq.question}>
-            <h3 className="text-gray-800 mb-2">{faq.question}</h3>
-            <p className="text-gray-600">{faq.answer}</p>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              {faq.question}
+            </h3>
+            <p className="text-gray-700">{faq.answer}</p>
           </div>
         ))}
       </div>
