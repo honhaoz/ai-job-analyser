@@ -1,6 +1,6 @@
 "use client";
 import type React from "react";
-import { Mail, Github, Linkedin, AtSign, Dot } from "lucide-react";
+import { Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 
 const ContactInfo = () => {
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -52,7 +52,7 @@ const ContactInfo = () => {
             <a
               href={contact.href}
               onClick={contact.isEmail ? handleEmailClick : undefined}
-              className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer"
+              className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer inline-flex items-center gap-1"
               target={contact.isEmail ? undefined : "_blank"}
               rel={contact.isEmail ? undefined : "noopener noreferrer"}
               aria-label={
@@ -62,6 +62,9 @@ const ContactInfo = () => {
               }
             >
               {contact.detail}
+              {!contact.isEmail && (
+                <ExternalLink className="w-4 h-4" aria-hidden="true" />
+              )}
             </a>
           )}
         </div>
