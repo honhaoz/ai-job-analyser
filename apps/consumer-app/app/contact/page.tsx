@@ -13,7 +13,7 @@ export default function Contact() {
 const HeroSection = () => {
   return (
     <div className="text-center mb-12">
-      <h1 className="text-4xl font-bold text-blue-700 mb-4">Get In Touch</h1>
+      <h2 className="text-4xl font-bold text-blue-700 mb-4">Get In Touch</h2>
       <p className="text-gray-700 text-lg">
         Have questions, feedback, or suggestions? We'd love to hear from you.
         Reach out through our social channels.
