@@ -15,9 +15,9 @@ export default function About() {
 const HeroSection = () => {
   return (
     <div className="text-center mb-12">
-      <h1 className="text-4xl font-bold text-blue-700 mb-4">
+      <h2 className="text-4xl font-bold text-blue-700 mb-4">
         About Our Platform
-      </h1>
+      </h2>
       <p className="text-gray-700 text-lg max-w-2xl mx-auto">
         AI-Powered Job Description Analyser helps job seekers optimise their
         applications by extracting key insights from job postings and providing
