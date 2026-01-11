@@ -5,8 +5,8 @@ import { Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 const ContactInfo = () => {
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const user = "honghao";
-    const domain = "workmail.com";
+    const user = "example";
+    const domain = "gmail.com";
     window.location.href = `mailto:${user}@${domain}`;
   };
 
