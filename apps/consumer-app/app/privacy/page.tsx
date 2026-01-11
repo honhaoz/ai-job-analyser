@@ -3,7 +3,7 @@ import { Warning } from "@/components/warning";
 export default function PrivacyPolicy() {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 sm:p-8">
-      <h1 className="text-4xl font-bold text-blue-700 mb-2">Privacy Policy</h1>
+      <h2 className="text-4xl font-bold text-blue-700 mb-2">Privacy Policy</h2>
       <div className="space-y-6 text-gray-700">
         <PolicySection title="Overview">
           <p>
