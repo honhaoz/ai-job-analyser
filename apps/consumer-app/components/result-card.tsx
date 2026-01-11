@@ -16,22 +16,25 @@ export function ResultCard({ title, type, content }: ResultCardProps) {
   return (
     <div className="rounded-xl shadow-md p-6 transition-all hover:shadow-xl hover:-translate-y-1 duration-300 flex flex-col">
       <div className="flex justify-between items-start mb-4">
-        <h3>{title}</h3>
+        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
         <CopyButton content={content} copied={copied} setCopied={setCopied} />
       </div>
 
       <div className="grow">
         {type === "skills" && Array.isArray(content) && (
-          <div className="flex flex-wrap gap-2">
+          <ul
+            className="flex flex-wrap gap-2 list-none"
+            aria-label="Extracted skills"
+          >
             {content.map((skill, index) => (
-              <span
+              <li
                 key={index}
                 className="px-3 py-1.5 text-blue-700 rounded-full text-sm border hover:bg-blue-100 transition-colors"
               >
                 {skill}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
 
         {type === "tips" && Array.isArray(content) && (
@@ -51,7 +54,11 @@ export function ResultCard({ title, type, content }: ResultCardProps) {
       </div>
 
       {copied && (
-        <div className="mt-3 text-sm text-green-600 text-center animate-fadeIn">
+        <div
+          className="mt-3 text-sm text-green-600 text-center animate-fadeIn"
+          role="status"
+          aria-live="polite"
+        >
           Copied to clipboard!
         </div>
       )}
@@ -95,7 +102,7 @@ export const CopyButton = ({
   return (
     <button
       onClick={handleCopy}
-      className="p-2 text-gray-400 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
+      className="p-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
       title="Copy to clipboard"
       aria-label={copied ? "Copied to clipboard" : "Copy to clipboard"}
     >

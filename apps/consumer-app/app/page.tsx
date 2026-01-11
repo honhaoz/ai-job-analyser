@@ -94,7 +94,9 @@ export default function Home() {
       />
       {analysedJD && (
         <div className="animate-fadeIn">
-          <h2 className="text-gray-800 mb-6">Analysis Results</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            Analysis Results
+          </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {resultCardsContent.map((card) => (
@@ -110,7 +112,7 @@ export default function Home() {
       )}
       {!analysedJD && (
         <div className="text-center py-12">
-          <FileText className="text-gray-400 mb-4 mx-auto w-24 h-24" />
+          <FileText className="text-gray-700 mb-4 mx-auto w-24 h-24" />
           <p className="text-gray-500">
             Paste a job description above and click "Analyse" to get started
           </p>
@@ -155,7 +157,7 @@ const InputJDForm = ({
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 gap-3">
           <div className="flex items-center gap-2">
             <span
-              className={`text-sm ${isValid ? "text-gray-600" : "text-gray-400"}`}
+              className={`text-sm ${isValid ? "text-gray-600" : "text-gray-700"}`}
             >
               {characterCount} characters
             </span>

@@ -19,7 +19,7 @@ export const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-200 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 text-sm text-gray-700">
           {linkList.map((link, index) => (
             <Fragment key={link.id}>
               {link.external ? (
@@ -28,6 +28,7 @@ export const Footer = () => {
                   className={cn("hover:text-blue-500")}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${link.label} (opens in new window)`}
                 >
                   {link.label}
                 </Link>
@@ -37,7 +38,12 @@ export const Footer = () => {
                 </Link>
               )}
               {index < linkList.length - 1 && (
-                <span className="hidden sm:inline text-gray-300">|</span>
+                <span
+                  className="hidden sm:inline text-gray-300"
+                  aria-hidden="true"
+                >
+                  |
+                </span>
               )}
             </Fragment>
           ))}

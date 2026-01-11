@@ -46,18 +46,19 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     const emailLink = screen.getByRole("link", {
-      name: /honghao.*workmail.*com/i,
+      name: /email us/i,
     });
     expect(emailLink).toBeInTheDocument();
     expect(emailLink).toHaveAttribute("href", "#");
     expect(emailLink).toHaveClass("cursor-pointer");
+    expect(emailLink).toHaveTextContent(/example@gmail\.com/i);
   });
 
   it("should render GitHub link with correct href", () => {
     render(<Contact />);
 
     const githubLink = screen.getByRole("link", {
-      name: /github\.com\/honhaoz/i,
+      name: /visit our github.*opens in new window/i,
     });
     expect(githubLink).toBeInTheDocument();
     expect(githubLink).toHaveAttribute("href", "https://github.com/honhaoz");
@@ -68,7 +69,7 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     const linkedinLink = screen.getByRole("link", {
-      name: /linkedin\.com\/in\/honghaoz/i,
+      name: /visit our linkedin.*opens in new window/i,
     });
     expect(linkedinLink).toBeInTheDocument();
     expect(linkedinLink).toHaveAttribute(
@@ -82,10 +83,10 @@ describe("Contact Page", () => {
     render(<Contact />);
 
     const githubLink = screen.getByRole("link", {
-      name: /github\.com\/honhaoz/i,
+      name: /visit our github.*opens in new window/i,
     });
     const linkedinLink = screen.getByRole("link", {
-      name: /linkedin\.com\/in\/honghaoz/i,
+      name: /visit our linkedin.*opens in new window/i,
     });
 
     expect(githubLink).toHaveAttribute("target", "_blank");
