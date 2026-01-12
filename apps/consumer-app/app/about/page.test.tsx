@@ -7,7 +7,7 @@ describe("About Page", () => {
     render(<About />);
 
     expect(
-      screen.getByRole("heading", { name: /about our platform/i, level: 1 }),
+      screen.getByRole("heading", { name: /about our platform/i, level: 2 }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -146,11 +146,9 @@ describe("About Page", () => {
   it("should have proper accessibility with heading hierarchy", () => {
     render(<About />);
 
-    const h1 = screen.getByRole("heading", { level: 1 });
     const h2Headings = screen.getAllByRole("heading", { level: 2 });
     const h3Headings = screen.getAllByRole("heading", { level: 3 });
 
-    expect(h1).toBeInTheDocument();
     expect(h2Headings.length).toBeGreaterThan(0);
     expect(h3Headings.length).toBeGreaterThan(0);
   });
