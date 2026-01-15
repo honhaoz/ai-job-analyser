@@ -139,6 +139,7 @@ const InputJDForm = ({
   isValid: boolean;
   error: string | null;
 }) => {
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   return (
     <form onSubmit={handleSubmit}>
       <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 mb-8 sm:mb-12 transition-all hover:shadow-lg">
@@ -153,7 +154,10 @@ const InputJDForm = ({
           className="w-full h-48 sm:h-64 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
           placeholder="Paste the full job description text here. Include requirements, responsibilities, and any other relevant details..."
         />
-
+        <PrivacyCheckbox
+          privacyAccepted={privacyAccepted}
+          setPrivacyAccepted={setPrivacyAccepted}
+        />
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 gap-3">
           <div className="flex items-center gap-2">
             <span
@@ -168,7 +172,7 @@ const InputJDForm = ({
 
           <button
             type="submit"
-            disabled={!isValid || isAnalysing}
+            disabled={!privacyAccepted || !isValid || isAnalysing}
             className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
           >
             {isAnalysing ? "Analysing..." : "Analyse"}
@@ -182,5 +186,36 @@ const InputJDForm = ({
         )}
       </div>
     </form>
+  );
+};
+
+const PrivacyCheckbox = ({
+  privacyAccepted,
+  setPrivacyAccepted,
+}: {
+  privacyAccepted: boolean;
+  setPrivacyAccepted: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  return (
+    <div className="flex flex-row items-start gap-3 mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+      <input
+        id="privacy-accept"
+        checked={privacyAccepted}
+        onChange={(e) => setPrivacyAccepted(e.target.checked === true)}
+        type="checkbox"
+        className="mt-1"
+      />
+      <label htmlFor="privacy-accept" className="text-sm text-gray-800 ">
+        I confirm that I have read and understood the{" "}
+        <Link
+          href="/privacy"
+          className="underline hover:text-amber-900 transition-colors"
+        >
+          Privacy Policy
+        </Link>
+        , and acknowledge that the job description will be sent to OpenAI for
+        processing. I will not include any personal or sensitive information.
+      </label>
+    </div>
   );
 };
