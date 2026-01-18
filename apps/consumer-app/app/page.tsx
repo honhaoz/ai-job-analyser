@@ -24,6 +24,10 @@ export default function Home() {
 
     try {
       const formData = new FormData(e.currentTarget);
+      formData.set(
+        "isPrivacyAccepted",
+        e.currentTarget.isPrivacyAccepted.checked,
+      );
       const response = await analyseJDAction(formData);
 
       if (response.success) {
@@ -200,6 +204,7 @@ const PrivacyCheckbox = ({
     <div className="flex flex-row items-start gap-3 mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
       <input
         id="privacy-accept"
+        name="isPrivacyAccepted"
         checked={privacyAccepted}
         onChange={(e) => setPrivacyAccepted(e.target.checked === true)}
         type="checkbox"
