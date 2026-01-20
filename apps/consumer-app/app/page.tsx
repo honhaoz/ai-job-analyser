@@ -26,7 +26,7 @@ export default function Home() {
       const formData = new FormData(e.currentTarget);
       formData.set(
         "isPrivacyAccepted",
-        e.currentTarget.isPrivacyAccepted.checked,
+        e.currentTarget.isPrivacyAccepted.checked ? "true" : "false",
       );
       const response = await analyseJDAction(formData);
 

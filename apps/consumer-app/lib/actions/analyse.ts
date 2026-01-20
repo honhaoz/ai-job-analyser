@@ -15,7 +15,8 @@ export async function analyseJDAction(formData: FormData) {
       isPrivacyAccepted: formData.get("isPrivacyAccepted"),
     });
 
-    if (!isPrivacyAccepted) {
+    const privacyAccepted = isPrivacyAccepted === "true";
+    if (!privacyAccepted) {
       return {
         success: false,
         error: "Privacy policy must be accepted",
