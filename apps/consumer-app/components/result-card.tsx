@@ -37,7 +37,7 @@ export function ResultCard({ title, type, content }: ResultCardProps) {
         <ul className="space-y-3">
           {content.map((tip, index) => (
             <li key={index} className="flex items-start gap-2">
-              <span className="text-blue-700 mt-1">•</span>
+              <span className="text-blue-700">•</span>
               <span className="flex-1">{tip}</span>
             </li>
           ))}
