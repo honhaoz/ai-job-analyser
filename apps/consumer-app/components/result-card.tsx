@@ -20,42 +20,35 @@ export function ResultCard({ title, type, content }: ResultCardProps) {
         <CopyButton content={content} copied={copied} setCopied={setCopied} />
       </div>
 
-      <div className="grow">
-        {type === "skills" && Array.isArray(content) && (
-          <ul
-            className="flex flex-wrap gap-2 list-none"
-            aria-label="Extracted skills"
-          >
-            {content.map((skill, index) => (
-              <li
-                key={index}
-                className="px-3 py-1.5 text-blue-700 rounded-full text-sm border hover:bg-blue-100 transition-colors"
-              >
-                {skill}
-              </li>
-            ))}
-          </ul>
-        )}
+      {type === "skills" && Array.isArray(content) && (
+        <ul className="flex flex-wrap gap-2" aria-label="Extracted skills">
+          {content.map((skill, index) => (
+            <li
+              key={index}
+              className="px-3 py-1.5 text-blue-700 rounded-full text-sm border hover:bg-blue-100 transition-colors"
+            >
+              {skill}
+            </li>
+          ))}
+        </ul>
+      )}
 
-        {type === "tips" && Array.isArray(content) && (
-          <ul className="space-y-3">
-            {content.map((tip, index) => (
-              <li key={index} className="flex items-start gap-2">
-                <span className="text-blue-700 mt-1">•</span>
-                <span className="flex-1">{tip}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+      {type === "tips" && Array.isArray(content) && (
+        <ul className="space-y-3">
+          {content.map((tip, index) => (
+            <li key={index} className="flex items-start gap-2">
+              <span className="text-blue-700 mt-1">•</span>
+              <span className="flex-1">{tip}</span>
+            </li>
+          ))}
+        </ul>
+      )}
 
-        {type === "text" && typeof content === "string" && (
-          <p className="leading-relaxed">{content}</p>
-        )}
-      </div>
+      {type === "text" && typeof content === "string" && <p>{content}</p>}
 
       {copied && (
         <div
-          className="mt-3 text-sm text-green-600 text-center animate-fadeIn"
+          className="mt-3 text-sm text-green-600 text-center"
           role="status"
           aria-live="polite"
         >

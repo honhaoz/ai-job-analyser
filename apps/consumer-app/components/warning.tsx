@@ -6,7 +6,7 @@ export const Warning = ({ message }: { message: React.ReactNode }) => {
     >
       <div className="flex">
         <div className="shrink-0">⚠️</div>
-        <div className="ml-3 flex-1">{message}</div>
+        <div className="ml-3">{message}</div>
       </div>
     </div>
   );
