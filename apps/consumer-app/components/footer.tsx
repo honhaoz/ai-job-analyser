@@ -27,6 +27,7 @@ export const Footer = () => {
                   href={link.href}
                   className={cn("hover:text-blue-500")}
                   target="_blank"
+                  // prevent destination page from accessing window.opener and knowing where the user came from
                   rel="noopener noreferrer"
                   aria-label={`${link.label} (opens in new window)`}
                 >

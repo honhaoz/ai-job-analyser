@@ -54,6 +54,7 @@ const ContactInfo = () => {
               onClick={contact.isEmail ? handleEmailClick : undefined}
               className="text-blue-500 hover:text-blue-700 transition-colors cursor-pointer inline-flex items-center gap-1"
               target={contact.isEmail ? undefined : "_blank"}
+              // prevent destination page from accessing window.opener and knowing where the user came from
               rel={contact.isEmail ? undefined : "noopener noreferrer"}
               aria-label={
                 contact.isEmail
