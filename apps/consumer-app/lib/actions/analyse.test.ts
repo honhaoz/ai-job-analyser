@@ -26,11 +26,26 @@ describe("analyseJDAction", () => {
   it("should return error for invalid job description", async () => {
     const formData = new FormData();
     formData.append("jobDescription", "short");
+    formData.append("isPrivacyAccepted", "true");
 
     const result = await analyseJDAction(formData);
 
     expect(result.success).toBe(false);
     expect(result.error).toBe("Invalid job description");
+  });
+
+  it("should return error when privacy policy is not accepted", async () => {
+    const formData = new FormData();
+    formData.append(
+      "jobDescription",
+      "Valid job description with more than ten characters",
+    );
+    formData.append("isPrivacyAccepted", "false");
+
+    const result = await analyseJDAction(formData);
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBe("Privacy policy must be accepted");
   });
 
   it("should return success with AI result for valid job description", async () => {
@@ -62,6 +77,7 @@ describe("analyseJDAction", () => {
       "jobDescription",
       "Valid job description with more than ten characters",
     );
+    formData.append("isPrivacyAccepted", "true");
 
     const result = await analyseJDAction(formData);
 
@@ -75,6 +91,7 @@ describe("analyseJDAction", () => {
 
   it("should handle missing job description field", async () => {
     const formData = new FormData();
+    formData.append("isPrivacyAccepted", "true");
 
     const result = await analyseJDAction(formData);
 

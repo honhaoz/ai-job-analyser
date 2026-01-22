@@ -5,13 +5,24 @@ import { validateJobDescription } from "@/lib/utils/validators";
 
 const JDFormSchema = z.object({
   jobDescription: z.string().min(1, "Job description is required").trim(),
+  isPrivacyAccepted: z.enum(["true", "false"]),
 });
 
 export async function analyseJDAction(formData: FormData) {
   try {
-    const { jobDescription } = JDFormSchema.parse({
+    const { jobDescription, isPrivacyAccepted } = JDFormSchema.parse({
       jobDescription: formData.get("jobDescription"),
+      isPrivacyAccepted: formData.get("isPrivacyAccepted"),
     });
+
+    const privacyAccepted = isPrivacyAccepted === "true";
+    if (!privacyAccepted) {
+      return {
+        success: false,
+        error: "Privacy policy must be accepted",
+        data: null,
+      };
+    }
 
     if (!validateJobDescription(jobDescription)) {
       return {
